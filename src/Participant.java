@@ -1,39 +1,83 @@
-public class Participant {
-    private String participantID;
+import java.util.Scanner;
+
+public class Participant extends User{
     private String name;
-    private String email;
     public boolean surveyCompleted;
     public Survey survey;
     private String personalityType;
 
-    //constructor
-    public Participant(String participantID, String name, String email,boolean surveyCompleted,Survey survey){
-        this.participantID=participantID;
+    //Constructor
+    public Participant(String id, String name,String email){
+        super(id,email);
         this.name=name;
-        this.email=email;
-        this.surveyCompleted=surveyCompleted;
-        this.survey=survey;
+        this.surveyCompleted=false;
+        this.survey=null;
     }
 
-    public void completeSurvey(Survey survey){
-        this.survey=survey;
+    public void participantMenu(){
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do{
+            System.out.println("\n===== Participant Menu =====");
+            System.out.println("1. View my details");
+            System.out.println("2. Complete Survey");
+            System.out.println("3. View Formed Teams");
+            System.out.println("4. Logout");
+            System.out.print("Enter your choice: ");
+            choice=Integer.parseInt(scanner.nextLine());
+
+            switch(choice){
+                case 1:
+                    viewParticipantDetails();
+                    break;
+                case 2:
+                    completeSurvey();
+                    break;
+                case 3:
+                    viewFormedTeams();
+                    break;
+                case 4:
+                    System.out.println("Logging out....");
+                    break;
+                default:
+                    System.out.println("Invalid choice.(Please only choose 1-3)");
+            }
+        }while(choice != 4);
+    }
+
+
+    private void viewParticipantDetails() {
+        System.out.println("\n===== Participant Details =====");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Survey Completed: " + surveyCompleted);
+        if(surveyCompleted){
+            System.out.println(getSurvey());
+            System.out.println("Personality Type: " + personalityType);
+        }else{
+            System.out.println("Please complete the survey.");
+        }
+    }
+
+    public void completeSurvey(){
+        this.survey=survey.completeSurvey();
         this.surveyCompleted=true;
         this.personalityType=survey.classifyPersonality();
+        System.out.println("\n Survey completed!!");
+    }
+
+
+    private void viewFormedTeams() {
     }
 
 
     //getters
-    public String getparticipantID(){
-        return participantID;
-    }
 
     public String getName(){
         return name;
     }
 
-    public String getEmail(){
-        return email;
-    }
 
     public Survey getSurvey(){
         return survey;
@@ -41,7 +85,9 @@ public class Participant {
 
     @Override
     public String toString(){
-        return "ID: "+participantID+"\nName: "+name+"\nEmail: "+email+"\nSurvey Completed: "+surveyCompleted+"\nSurvey:\n "+getSurvey();
+        return "ID: "+id+"\nName: "+name+"\nEmail: "+
+                email+"\nSurvey Completed: "+surveyCompleted+
+                "\nSurvey:\n "+getSurvey();
     }
 
 }
