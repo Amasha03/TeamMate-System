@@ -1,23 +1,24 @@
 import java.util.*;
 
 public class Survey {
-    int[] personalityScores=new int[5];
+    int[] surveyScores=new int[5];
+    static int personalityScore;
     String interests;
     String preferredRole;
 
     //constructor
-    public Survey(int[] scores,String interests,String preferredRole){
-        this.personalityScores=scores;
+    public Survey(int personalityScore,String interests,String preferredRole){
+        this.personalityScore=personalityScore;
         this.interests=interests;
         this.preferredRole=preferredRole;
     }
 
     //calculate personality score
-    public int calPersonalityScore(){
+    public int calSurveyScore(){
         int total=0;
         int totalScore=0;
-        for(int i=0;i<personalityScores.length;i++){
-            total+=personalityScores[i];
+        for(int i=0;i<surveyScores.length;i++){
+            total+=surveyScores[i];
             totalScore=total*4;
         }
         return totalScore;
@@ -25,7 +26,7 @@ public class Survey {
 
     //classify personality
     public String classifyPersonality(){
-        int score=calPersonalityScore();
+        int score=calSurveyScore();
         if(score>=90)
             return "Leader";
         else if(score>=70)
@@ -47,42 +48,43 @@ public class Survey {
     //personality questions
     public static Survey completeSurvey() {
         Scanner scanner=new Scanner(System.in);
-        int[] personalityScores = new int[5];
+        int[] surveyScores = new int[5];
+
 
         System.out.println("**********MEMBER SURVEY**********");
         System.out.println("Personality Questions:");
         System.out.println("Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree).");
-        int personalityScore;
+        int surveyScore;
 
         do {
             System.out.println("Q1: I enjoy taking the lead and guiding others during group activities.");
-            personalityScore = Integer.parseInt(scanner.nextLine());
-        } while (personalityScore < 1 || personalityScore > 5);
-        personalityScores[0] = personalityScore;
+            surveyScore = Integer.parseInt(scanner.nextLine());
+        } while (surveyScore < 1 || surveyScore > 5);
+        surveyScores[0] = surveyScore;
 
         do {
             System.out.println("Q2: I prefer analyzing situations and coming up with strategic solutions.");
-            personalityScore = Integer.parseInt(scanner.nextLine());
-        } while (personalityScore < 1 || personalityScore > 5);
-        personalityScores[1] = personalityScore;
+            surveyScore = Integer.parseInt(scanner.nextLine());
+        } while (surveyScore < 1 || surveyScore > 5);
+        surveyScores[1] = surveyScore;
 
         do {
             System.out.println("Q3: I work well with others and enjoy collaborative teamwork.");
-            personalityScore = Integer.parseInt(scanner.nextLine());
-        } while (personalityScore < 1 || personalityScore > 5);
-        personalityScores[2] = personalityScore;
+            surveyScore = Integer.parseInt(scanner.nextLine());
+        } while (surveyScore < 1 || surveyScore > 5);
+        surveyScores[2] = surveyScore;
 
         do {
             System.out.println("Q4: I am calm under pressure and can help maintain team morale.");
-            personalityScore = Integer.parseInt(scanner.nextLine());
-        } while (personalityScore < 1 || personalityScore > 5);
-        personalityScores[3] = personalityScore;
+            surveyScore = Integer.parseInt(scanner.nextLine());
+        } while (surveyScore < 1 || surveyScore > 5);
+        surveyScores[3] = surveyScore;
 
         do {
             System.out.println("Q5: I like making quick decisions and adapting in dynamic situations.");
-            personalityScore = Integer.parseInt(scanner.nextLine());
-        } while (personalityScore < 1 || personalityScore > 5);
-        personalityScores[4] = personalityScore;
+            surveyScore = Integer.parseInt(scanner.nextLine());
+        } while (surveyScore < 1 || surveyScore > 5);
+        surveyScores[4] = surveyScore;
 
 
         //Interests
@@ -102,7 +104,7 @@ public class Survey {
         System.out.println("\n------member survey result------");
         System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role);
 
-        return new Survey(personalityScores, interests, role);
+        return new Survey(personalityScore,interests, role);
     }
     @Override
     public String toString(){

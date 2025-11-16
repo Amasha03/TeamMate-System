@@ -4,6 +4,10 @@ public class Participant extends User{
     private String name;
     public boolean surveyCompleted;
     public Survey survey;
+    private String preferredGame;
+    private int skillLevel;
+    private String preferredRole;
+    private int personalityScore;
     private String personalityType;
 
     //Constructor
@@ -12,6 +16,13 @@ public class Participant extends User{
         this.name=name;
         this.surveyCompleted=false;
         this.survey=null;
+    }
+
+    public Participant(String id, String name, String email, boolean surveyCompleted, String personalityType) {
+        super(id,email);
+        this.name=name;
+        this.surveyCompleted=surveyCompleted;
+        this.personalityType=personalityType;
     }
 
     public void participantMenu(){
@@ -31,7 +42,10 @@ public class Participant extends User{
                     viewParticipantDetails();
                     break;
                 case 2:
-                    completeSurvey();
+                    if(surveyCompleted){
+                        System.out.println("Survey is already completed");
+                    }else{
+                    completeSurvey();}
                     break;
                 case 3:
                     viewFormedTeams();
@@ -46,14 +60,13 @@ public class Participant extends User{
     }
 
 
-    private void viewParticipantDetails() {
+    public void viewParticipantDetails() {
         System.out.println("\n===== Participant Details =====");
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);
         System.out.println("Survey Completed: " + surveyCompleted);
         if(surveyCompleted){
-            System.out.println(getSurvey());
             System.out.println("Personality Type: " + personalityType);
         }else{
             System.out.println("Please complete the survey.");
@@ -83,11 +96,41 @@ public class Participant extends User{
         return survey;
     }
 
+    //setters
+    public void setPreferredGame(String preferredGame){
+        this.preferredGame=preferredGame;
+    }
+
+    public void setSkillLevel(int skillLevel){
+        this.skillLevel=skillLevel;
+    }
+
+    public void setPreferredRole(String preferredRole){
+        this.preferredRole=preferredRole;
+    }
+
+    public void setPersonalityScore(int personalityScore){
+        this.personalityScore=personalityScore;
+    }
+
+    public void setPersonalityType(String personalityType){
+        this.personalityType=personalityType;
+    }
+
+    public void setSurveyCompleted(boolean surveyCompleted){
+        this.surveyCompleted=true;
+    }
+
+
     @Override
     public String toString(){
-        return "ID: "+id+"\nName: "+name+"\nEmail: "+
-                email+"\nSurvey Completed: "+surveyCompleted+
-                "\nSurvey:\n "+getSurvey();
+        String result= "ID: "+id+"\nName: "+name+"\nEmail: "+
+                email+"\nSurvey Completed: "+surveyCompleted;
+
+        if(surveyCompleted && survey!=null){
+            result= result="\n Survey: \n"+survey.toString();
+        }
+        return result;
     }
 
 }
