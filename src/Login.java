@@ -31,7 +31,7 @@ public class Login {
                 break;
 
                 case "2":
-                    register(scanner);
+                    Participant p=Register.register((ArrayList<Participant>) participants);
                         break;
 
                 case "3":
@@ -79,11 +79,6 @@ public class Login {
 
         System.out.println("Invalid login!");
         return null;
-    }
-
-    // ----------- REGISTER -----------
-    public void register(Scanner scanner) {
-        System.out.println("Register Feature Coming Soon...");
     }
 
 }
