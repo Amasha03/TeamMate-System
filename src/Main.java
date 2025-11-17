@@ -5,10 +5,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<Participant> participants =
-                ParticipantCSV.loadParticipantCSV("resources/participants_sample.csv");
-
-        ArrayList<Organizer> organizers = new ArrayList<>();
+        ArrayList<Participant> participants = ParticipantCSV.loadParticipantCSV("resources/participants_sample.csv");
+        ArrayList<Organizer> organizers =Organizer.getOrganizers("resources/organizer_sample.csv");
 
         // Create Login object
         Login loginSystem = new Login(organizers, participants);

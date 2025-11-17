@@ -62,6 +62,14 @@ public class Login {
         }
 
         // Check in Organizers
+        for (Organizer o : organizers) {
+            if (o.getId().equals(id) && o.getEmail().equals(email)) {
+                System.out.println("Participant Login Successful!");
+                return o;
+            }
+        }
+
+        // Check in Organizers
         //for (Organizer o : organizers) {
         //  if (o.getId().equals(id) && o.getEmail().equals(email)) {
         //    System.out.println("Organizer Login Successful!");

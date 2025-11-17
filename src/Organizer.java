@@ -1,12 +1,40 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Organizer extends User{
     private String name;
     private String role;
-    public Organizer(String id, String email, String password, String name, String role) {
+    public Organizer(String id, String email, String name, String role) {
         super(id, email);
         this.name=name;
         this.role=role;
+    }
+
+    public static ArrayList<Organizer> getOrganizers(String filePath){
+        ArrayList<Organizer> organizers=new ArrayList<Organizer>();
+
+        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String line;
+            br.readLine();
+
+            while((line=br.readLine()) != null){
+                String[] data=line.split(",");
+
+                String id=data[0].trim();
+                String name=data[1].trim();
+                String email=data[2].trim();
+                String role=data[3].trim();
+
+                Organizer organizer=new Organizer(id,email,name,role);
+                organizers.add(organizer);
+            }
+        }catch (Exception e){
+            System.out.println("Error reading file");
+        }
+        return organizers;
     }
 
     @Override
