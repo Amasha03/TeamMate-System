@@ -1,4 +1,4 @@
-public class User {
+public abstract class User {
     String id;
     String email;
 
@@ -15,4 +15,5 @@ public class User {
         return email;
     }
 
+    public abstract void showMenu();  // Polymorphic menu
 }

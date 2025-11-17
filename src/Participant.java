@@ -25,7 +25,8 @@ public class Participant extends User{
         this.personalityType=personalityType;
     }
 
-    public void participantMenu(){
+    @Override
+    public void showMenu(){
         Scanner scanner = new Scanner(System.in);
         int choice;
         do{
