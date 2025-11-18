@@ -7,10 +7,19 @@ import java.util.Scanner;
 public class Organizer extends User{
     private String name;
     private String role;
+    public ArrayList<Participant> participants=new ArrayList<>();
+
     public Organizer(String id, String email, String name, String role) {
         super(id, email);
         this.name=name;
         this.role=role;
+    }
+
+    public Organizer(String id, String email, String name, String role,ArrayList<Participant> participants) {
+        super(id, email);
+        this.name=name;
+        this.role=role;
+        this.participants=participants;
     }
 
     public static ArrayList<Organizer> getOrganizers(String filePath){
@@ -44,8 +53,8 @@ public class Organizer extends User{
         do {
             System.out.println("===== Organizer Menu =====");
             System.out.println("1. View Personal Details");
-            System.out.println("2. Upload Participant CSV");
-            System.out.println("3. View Participants");
+            System.out.println("2. Save Participants to CSV");
+            System.out.println("3. Upload Participant CSV");
             System.out.println("4. Set Team Size");
             System.out.println("5. Generate Teams");
             System.out.println("6. Save Teams to CSV");
@@ -58,6 +67,8 @@ public class Organizer extends User{
                     viewOrganizerDetails();
                     break;
                 case 2:
+                    System.out.println("DEBUG -> participant size = "+participants.size());
+                    ParticipantCSV.saveParticipantsToCSV(participants,"resources/participants.csv");
                     break;
                 case 3:
                     break;

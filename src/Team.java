@@ -6,6 +6,4 @@ public class Team {
     public Team(String teamID){
         this.teamID=teamID;
     }
-
-
 }

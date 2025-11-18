@@ -8,7 +8,7 @@ public class Participant extends User{
     private int skillLevel;
     private String preferredRole;
     private int personalityScore;
-    private String personalityType;
+    public String personalityType;
 
     //Constructor
     public Participant(String id, String name,String email){
@@ -77,7 +77,6 @@ public class Participant extends User{
     public void completeSurvey(){
         this.survey=survey.completeSurvey();
         this.surveyCompleted=true;
-        this.personalityType=survey.classifyPersonality();
         System.out.println("\n Survey completed!!");
     }
 
@@ -97,6 +96,25 @@ public class Participant extends User{
         return survey;
     }
 
+    public int getSkillLevel(){
+        return skillLevel;
+    }
+
+    public String getPreferredRole(){
+        return preferredRole;
+    }
+
+    public String getPersonalityType(){
+        return personalityType;
+    }
+
+    public int getPersonalityScore(){
+        return personalityScore;
+    }
+
+    public String getPreferredGame() {
+        return preferredGame;
+    }
     //setters
     public void setPreferredGame(String preferredGame){
         this.preferredGame=preferredGame;

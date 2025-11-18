@@ -8,14 +8,16 @@ public class Main {
         ArrayList<Participant> participants = ParticipantCSV.loadParticipantCSV("resources/participants_sample.csv");
         ArrayList<Organizer> organizers =Organizer.getOrganizers("resources/organizer_sample.csv");
 
+        for(Organizer o : organizers){
+            o.participants=participants;
+        }
         // Create Login object
         Login loginSystem = new Login(organizers, participants);
 
         // Call home screen
         loginSystem.showHomeScreen();
 
-        ArrayList<Participant> list=ParticipantCSV.loadParticipantCSV("resources/participants_sample.csv");
-        System.out.println("number of participants loaded: "+list.size());
+        System.out.println("number of participants loaded: "+participants.size());
 
         //Participant participant=Login.login(list);
         //if(participant != null){

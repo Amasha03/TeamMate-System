@@ -1,6 +1,9 @@
 import java.util.*;
 
 public class Register {
+
+    private static String participantCSV="resources/participants_sample.CSV";
+
     public static Participant register(ArrayList<Participant> participants) {
         Scanner scanner = new Scanner(System.in);
 
@@ -27,6 +30,9 @@ public class Register {
         // Create new participant
         Participant p = new Participant(id, name, email);
         participants.add(p);
+
+        //Participant newP = Register.register(participants);
+        //participants.add(newP);
 
         System.out.println("Registration Successful!");
         return p;
