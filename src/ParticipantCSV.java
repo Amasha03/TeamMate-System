@@ -21,16 +21,21 @@ public class ParticipantCSV {
                     String id = data[0].trim();
                     String name = data[1].trim();
                     String email = data[2].trim();
+                    String preferredName = data[3].trim();
+                    int skillLevel = Integer.parseInt(data[4].trim());
+                    String preferredRole = data[5].trim();
+                    int personalityScore = Integer.parseInt(data[6].trim());
+                    String personalityType = data[7].trim();
 
+                    boolean surveyCompleted = true;
 
-                    boolean surveyCompleted = false;
-                    String personalityType = null;
-                    if (data[7] != null) {
-                        surveyCompleted = true;
-                        personalityType = data[7].trim();
-                    }
                     Participant p=new Participant(id, name, email, surveyCompleted, personalityType);
-                   participants.add(p);
+                    p.setPreferredGame(preferredName);
+                    p.setSkillLevel(skillLevel);
+                    p.setPreferredRole(preferredRole);
+                    p.setPersonalityScore(personalityScore);
+
+                    participants.add(p);
 
                 }
             }

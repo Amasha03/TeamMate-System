@@ -5,11 +5,13 @@ public class Survey {
     String interests;
     String preferredRole;
     String personalityType;
+    int personalityScore;
 
     //constructor
-    public Survey(String interests,String preferredRole,String personalityType){
+    public Survey(String interests,String preferredRole,int personalityScore,String personalityType){
         this.interests=interests;
         this.preferredRole=preferredRole;
+        this.personalityScore=personalityScore;
         this.personalityType=personalityType;
     }
 
@@ -88,17 +90,17 @@ public class Survey {
         String role = scanner.nextLine();
 
         //calculate personality score
-            int totalScore=0;
+            int personalityScore=0;
             for(int score : surveyScores)
-                totalScore +=score;
-            totalScore *=4;
+                personalityScore +=score;
+            personalityScore *=4;
 
         String personalityType;
-        if(totalScore >90)
+        if(personalityScore >90)
             personalityType="Leader";
-        else if (totalScore>70)
+        else if (personalityScore>70)
             personalityType="Balanced";
-        else if (totalScore>50)
+        else if (personalityScore>50)
             personalityType="Thinker";
         else
             personalityType="Unknown";
@@ -110,10 +112,10 @@ public class Survey {
 
         //Display full info
         System.out.println("\n------member survey result------");
-        System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Type: "+ personalityType);
+        System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Score: "+personalityScore+"\nPersonality Type: "+ personalityType);
 
 
-        Survey survey = new Survey(interests,role,personalityType);
+        Survey survey = new Survey(interests,role,personalityScore, personalityType);
         survey.surveyScores=surveyScores;
         return survey;
 

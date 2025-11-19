@@ -75,8 +75,13 @@ public class Participant extends User{
     }
 
     public void completeSurvey(){
-        this.survey=survey.completeSurvey();
+        this.survey=Survey.completeSurvey();
         this.surveyCompleted=true;
+        this.personalityType=this.survey.personalityType;
+        this.preferredGame=this.survey.getInterests();
+        this.personalityScore=this.survey.personalityScore;
+        this.preferredRole=this.survey.getPreferredRole();
+
         System.out.println("\n Survey completed!!");
     }
 
