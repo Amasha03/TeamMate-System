@@ -8,11 +8,14 @@ public class Organizer extends User{
     private String name;
     private String role;
     public ArrayList<Participant> participants=new ArrayList<>();
+    private TeamFormation teamFormation;
+    private int teamSize;
 
     public Organizer(String id, String email, String name, String role) {
         super(id, email);
         this.name=name;
         this.role=role;
+        this.teamFormation=new TeamFormation();
     }
 
     public Organizer(String id, String email, String name, String role,ArrayList<Participant> participants) {
@@ -62,6 +65,7 @@ public class Organizer extends User{
             System.out.println("8. Logout");
             System.out.println("Enter your choice");
             choice=scanner.nextInt();
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     viewOrganizerDetails();
@@ -71,16 +75,38 @@ public class Organizer extends User{
                     ParticipantCSV.saveParticipantsToCSV(participants,"resources/participants.csv");
                     break;
                 case 3:
+                    System.out.println("Enter CSV file path: ");
+                    String path=scanner.nextLine();
+                    participants=ParticipantCSV.loadParticipantCSV(path);
+                    System.out.println("Successfully loaded "+participants.size()+" participants.");
                     break;
                 case 4:
+                    System.out.println("Enter team size: ");
+                    teamSize=Integer.parseInt(scanner.nextLine());
+                    if(teamSize<=0){
+                        System.out.println("Invalid team size.");
+                    }else {
+                        System.out.println("Successfully set team size to "+teamSize);
+                    }
+
                     break;
                 case 5:
+                    if (participants.isEmpty()){
+                        System.out.println("Please upload participants file.");
+                    }else{
+                        teamFormation.generateTeams(participants,teamSize);
+                    }
                     break;
                 case 6:
+                    System.out.println("Enter CSV file path to save teams: ");
+                    String savePath=scanner.nextLine();
+                    teamFormation.saveTeamsToCSV(savePath);
                     break;
                 case 7:
+                    teamFormation.displayTeams();
                     break;
                 case 8:
+                    System.out.println("Logging out...");
                     break;
                 default:
                     System.out.println("Invalid choice");

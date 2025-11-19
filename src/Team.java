@@ -1,9 +1,27 @@
 import java.util.*;
 public class Team {
     String teamID;
-    List<String> members=new ArrayList<>();
+    int teamSize;
+    ArrayList<Participant> members=new ArrayList<>();
 
-    public Team(String teamID){
+
+    public Team(int teamSize) {
         this.teamID=teamID;
+        this.teamSize=teamSize;
+    }
+
+    public boolean addMember(Participant p){
+        if(members.size() >= teamSize )
+            return false;
+        members.add(p);
+        return true;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb=new StringBuilder();
+        for(Participant p:members)
+            sb.append(p).append("\n");
+        return sb.toString();
     }
 }
