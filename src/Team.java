@@ -20,8 +20,10 @@ public class Team {
     @Override
     public String toString(){
         StringBuilder sb=new StringBuilder();
+        sb.append("Members: \n");
         for(Participant p:members)
-            sb.append(p).append("\n");
+            sb.append(" - ").append(p.getTeamDisplayInfo()).append("\n");
+            //sb.append(p).append("\n");
         return sb.toString();
     }
 }

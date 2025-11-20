@@ -101,6 +101,10 @@ public class Participant extends User{
         }
     }
 
+    public String getTeamDisplayInfo(){
+        return "ID: "+id+", Name: "+name+", Email: "+email+", Personality: "+personalityType;
+    }
+
     //getters
 
     public String getName(){
