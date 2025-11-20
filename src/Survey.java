@@ -42,21 +42,35 @@ public class Survey {
         };
 
         for(int i=0;i<5;i++){
-            int score;
-            do{
+            while(true){
                 System.out.println(questions[i]);
-                score=Integer.parseInt(scanner.nextLine());
-            }while(score<1||score>5);
-            surveyScores[i]=score;
+                String input=scanner.nextLine();
+            try{
+            int score=Integer.parseInt(input);
+            if(score>=0 && score<=5){
+                surveyScores[i]=score;
+                break;
+            }else{
+                System.out.println("Invalid answer. Please enter a number between 1 and 5.");
+            }
+            }catch(NumberFormatException e){
+                System.out.println("Invalid answer. Please enter a number between 1 and 5.");}
+            }
         }
 
         //Interests
         System.out.println("Enter your game interests:(eg:Valorant,Dota,FIFA,Basketball,Badminton)");
         String interests = scanner.nextLine();
+        if(interests.isEmpty()){
+            System.out.println("Interests cannot be empty");
+        }
 
         //Preferred role
         System.out.println("Enter your preferred role: (eg:Strategist,Attacker,Defender,Supporter,Coordinator)");
         String role = scanner.nextLine();
+        if(role.isEmpty()){
+            System.out.println("Role cannot be empty");
+        }
 
         //calculate personality score
             int personalityScore=0;

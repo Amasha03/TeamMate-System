@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +11,11 @@ public class TeamFormation implements TeamBuilder{
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize){
         teams.clear();
-        if(participants.isEmpty() || teamSize <= 0){
+        if(participants.isEmpty()){
             System.out.println("Participants list empty or invalid team size.");
+            return;
+        } else if (teamSize<=2) {
+            System.out.println("Minimum team size should be 3");
             return;
         }
 
@@ -75,10 +79,17 @@ public class TeamFormation implements TeamBuilder{
     //SAVE GENERATED TEAMS TO A CSV FILE
     @Override
     public void saveTeamsToCSV(String filePath){
-
         String teamsFilePath="resources/formed_teams.csv";
 
-        try(FileWriter fw = new FileWriter(teamsFilePath)){
+        try{
+            File directory = new File("resources");
+            if(!directory.exists()){
+                if(!directory.mkdirs()){
+                    System.out.println("Error creating directory");
+                    return;
+                }
+            }
+            FileWriter fw = new FileWriter(teamsFilePath);
             fw.write("Team Id,Participant Id,Participant Name,Preferred Game,Preferred Role,Personality Type,Skill Level\n");
             int teamId=1;
             for(Team team:teams){
@@ -89,9 +100,12 @@ public class TeamFormation implements TeamBuilder{
                 teamId++;
                 fw.write("\n");
             }
+            fw.close();
             System.out.println("Teams successfully saved to  "+teamsFilePath);
         }catch (IOException e){
             System.out.println("Error occurred in saving CSV: "+e.getMessage());
+        }catch(Exception e){
+            System.out.println("Unexpected error occurred.");
         }
     }
 

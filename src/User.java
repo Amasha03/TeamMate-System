@@ -17,4 +17,21 @@ public abstract class User {
 
     //MENU FOR PARTICIPANTS AND ORGANIZERS (polymorphic menu)
     public abstract void showMenu();
+
+    //----------------------------VALIDATIONS-------------------------------
+    //VALIDATE ID
+    public boolean isValidId(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            return false;
+        }
+        return id.matches("[a-zA-Z0-9]+");
+    }
+
+    //VALIDATE EMAIL
+    public boolean isValidEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
+        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+");
+    }
 }

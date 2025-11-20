@@ -30,15 +30,27 @@ public class Participant extends User{
     @Override
     public void showMenu(){
         Scanner scanner = new Scanner(System.in);
-        int choice;
-        do{
+
+        while(true){
             System.out.println("\n===== Participant Menu =====");
             System.out.println("1. View my details");
             System.out.println("2. Complete Survey");
             System.out.println("3. View Formed Teams");
             System.out.println("4. Logout");
             System.out.print("Enter your choice: ");
-            choice=Integer.parseInt(scanner.nextLine());
+            int choice;
+
+            //validate input
+            try{
+                choice=Integer.parseInt(scanner.nextLine());
+                if(choice<1 || choice>4){
+                    System.out.println("Invalid choice. Please enter a number between 1-4.");
+                    continue;
+                }
+            }catch(NumberFormatException e){
+                System.out.println("Invalid choice. Please enter a number between 1-4.");
+                continue;
+            }
 
             switch(choice){
                 case 1:
@@ -55,11 +67,10 @@ public class Participant extends User{
                     break;
                 case 4:
                     System.out.println("Logging out....");
-                    break;
-                default:
-                    System.out.println("Invalid choice.(Please only choose 1-3)");
+                    return;
+
             }
-        }while(choice != 4);
+        }
     }
 
 

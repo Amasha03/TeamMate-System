@@ -39,8 +39,14 @@ public class CSVFileHandler {
 
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Error in reading file");
+        }
+        catch(FileNotFoundException nf){
+            System.out.println("File not found");
+        }catch(IOException ioe){
+            System.out.println("Error reading file");
+        }
+        catch (Exception e) {
+            System.out.println("Unexpected error occurred.");
         }
         return participants;
     }
@@ -64,23 +70,16 @@ public class CSVFileHandler {
                 Organizer organizer=new Organizer(id,email,name,role);
                 organizers.add(organizer);
             }
-        }catch (Exception e){
+        }
+        catch(FileNotFoundException nf){
+            System.out.println("File not found");
+        }catch(IOException ioe){
             System.out.println("Error reading file");
+        }catch (Exception e){
+            System.out.println("Unexpected error occurred.");
         }
         return organizers;
     }
-/**
-    //-------------VALIDATE THE PARTICIPANT BASED ON CSV DATA--------------
-    public static Participant login(String id, String email,ArrayList<Participant> participants){
-        for (Participant p : participants) {
-            if(p.getId().equalsIgnoreCase(id)&&p.getEmail().equalsIgnoreCase(email)){
-                return p;
-            }
-        }
-        return null;
-    }
-
-**/
 
 
     //SAVE REGISTERED PARTICIPANTS TO CSV
@@ -96,6 +95,8 @@ public class CSVFileHandler {
             System.out.println("Participants successfully saved to : "+ pFilePath);
         }catch (IOException e){
             System.out.println("Error in writing to file"+e.getMessage());
+        }catch (Exception e){
+            System.out.println("Unexpected error occurred.");
         }
     }
 
