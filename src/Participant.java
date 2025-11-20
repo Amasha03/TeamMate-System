@@ -9,6 +9,7 @@ public class Participant extends User{
     private String preferredRole;
     private int personalityScore;
     public String personalityType;
+    TeamFormation teamFormation;
 
     //Constructor
     public Participant(String id, String name,String email){
@@ -49,7 +50,7 @@ public class Participant extends User{
                     completeSurvey();}
                     break;
                 case 3:
-                    viewFormedTeams();
+                    viewTeam();
                     break;
                 case 4:
                     System.out.println("Logging out....");
@@ -89,6 +90,16 @@ public class Participant extends User{
     private void viewFormedTeams() {
     }
 
+    public void viewTeam() {
+        Team myTeam = TeamFormation.TeamOfParticipant(this.id);
+
+        if(myTeam==null){
+            System.out.println("You are not assigned to any team yet.");
+        }else{
+            System.out.println("\n======== Your Team =========");
+            System.out.println(myTeam);
+        }
+    }
 
     //getters
 
@@ -143,6 +154,10 @@ public class Participant extends User{
 
     public void setSurveyCompleted(boolean surveyCompleted){
         this.surveyCompleted=true;
+    }
+
+    public void setTeamFormation(TeamFormation teamFormation){
+        this.teamFormation=teamFormation;
     }
 
 

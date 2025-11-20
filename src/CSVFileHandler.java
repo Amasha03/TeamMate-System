@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.*;
 
 //---------LOAD PARTICIPANT CSV TO GET PARTICIPANT DATA------------------
-public class ParticipantCSV {
-    public ParticipantCSV() throws IOException {
+public class CSVFileHandler {
+    public CSVFileHandler() throws IOException {
     }
 
     public static ArrayList<Participant> loadParticipantCSV(String filePath)
@@ -44,6 +44,31 @@ public class ParticipantCSV {
         }
         return participants;
     }
+
+    public static ArrayList<Organizer> getOrganizers(String filePath){
+        ArrayList<Organizer> organizers=new ArrayList<Organizer>();
+
+        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String line;
+            br.readLine();
+
+            while((line=br.readLine()) != null){
+                String[] data=line.split(",");
+
+                String id=data[0].trim();
+                String name=data[1].trim();
+                String email=data[2].trim();
+                String role=data[3].trim();
+
+                Organizer organizer=new Organizer(id,email,name,role);
+                organizers.add(organizer);
+            }
+        }catch (Exception e){
+            System.out.println("Error reading file");
+        }
+        return organizers;
+    }
+
     //-------------VALIDATE THE PARTICIPANT BASED ON CSV DATA--------------
     public static Participant login(String id, String email,ArrayList<Participant> participants){
         for (Participant p : participants) {

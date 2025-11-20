@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TeamFormation implements TeamBuilder{
-    private ArrayList<Team> teams = new ArrayList<>();
+    private static ArrayList<Team> teams = new ArrayList<>();
 
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize){
@@ -60,7 +60,6 @@ public class TeamFormation implements TeamBuilder{
         }
         System.out.println("Teams generated successfully.");
     }
-
     @Override
     public void displayTeams(){
         int t=1;
@@ -76,6 +75,7 @@ public class TeamFormation implements TeamBuilder{
         String teamsFilePath="resources/formed_teams.csv";
 
         try(FileWriter fw = new FileWriter(teamsFilePath)){
+            fw.write("Team Id,Participant Id,Participant Name,Preferred Game,Preferred Role,Personality Type,Skill Level\n");
             int teamId=1;
             for(Team team:teams){
                 for(Participant participant: team.members){
@@ -88,5 +88,16 @@ public class TeamFormation implements TeamBuilder{
         }catch (IOException e){
             System.out.println("Error occurred in saving CSV: "+e.getMessage());
         }
+    }
+
+    public static Team TeamOfParticipant (String participantId){
+        for(Team team:teams){
+            for(Participant p:team.members){
+                if(p.id.equals(participantId)){
+                    return team;
+                }
+            }
+        }
+        return null;
     }
 }

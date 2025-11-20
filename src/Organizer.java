@@ -25,29 +25,6 @@ public class Organizer extends User{
         this.participants=participants;
     }
 
-    public static ArrayList<Organizer> getOrganizers(String filePath){
-        ArrayList<Organizer> organizers=new ArrayList<Organizer>();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
-            String line;
-            br.readLine();
-
-            while((line=br.readLine()) != null){
-                String[] data=line.split(",");
-
-                String id=data[0].trim();
-                String name=data[1].trim();
-                String email=data[2].trim();
-                String role=data[3].trim();
-
-                Organizer organizer=new Organizer(id,email,name,role);
-                organizers.add(organizer);
-            }
-        }catch (Exception e){
-            System.out.println("Error reading file");
-        }
-        return organizers;
-    }
 
     @Override
     public void showMenu() {
@@ -71,31 +48,36 @@ public class Organizer extends User{
                     viewOrganizerDetails();
                     break;
                 case 2:
-                    System.out.println("DEBUG -> participant size = "+participants.size());
-                    ParticipantCSV.saveParticipantsToCSV(participants,"resources/participants.csv");
+                    System.out.println("DEBUG -> participant size = " + participants.size());
+                    CSVFileHandler.saveParticipantsToCSV(participants, "resources/participants.csv");
                     break;
                 case 3:
                     System.out.println("Enter CSV file path: ");
-                    String path=scanner.nextLine();
-                    participants=ParticipantCSV.loadParticipantCSV(path);
-                    System.out.println("Successfully loaded "+participants.size()+" participants.");
+                    String path = scanner.nextLine();
+                    participants = CSVFileHandler.loadParticipantCSV(path);
+                    System.out.println("Successfully loaded " + participants.size() + " participants.");
                     break;
                 case 4:
                     System.out.println("Enter team size: ");
-                    teamSize=Integer.parseInt(scanner.nextLine());
-                    if(teamSize<=0){
+                    teamSize = Integer.parseInt(scanner.nextLine());
+                    if (teamSize <= 0) {
                         System.out.println("Invalid team size.");
-                    }else {
-                        System.out.println("Successfully set team size to "+teamSize);
+                    } else {
+                        System.out.println("Successfully set team size to " + teamSize);
                     }
 
                     break;
                 case 5:
-                    if (participants.isEmpty()){
+                    if (participants.isEmpty()) {
                         System.out.println("Please upload participants file.");
-                    }else{
-                        teamFormation.generateTeams(participants,teamSize);
+                    } else {
+                        teamFormation.generateTeams(participants, teamSize);
+
+                        for (Participant p : participants) {
+                            p.setTeamFormation(teamFormation);
+                        }
                     }
+
                     break;
                 case 6:
                     System.out.println("Enter CSV file path to save teams: ");
