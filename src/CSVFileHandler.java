@@ -1,11 +1,11 @@
 import java.io.*;
 import java.util.*;
 
-//---------LOAD PARTICIPANT CSV TO GET PARTICIPANT DATA------------------
 public class CSVFileHandler {
     public CSVFileHandler() throws IOException {
     }
 
+    //LOAD PARTICIPANT CSV TO GET PARTICIPANT DATA
     public static ArrayList<Participant> loadParticipantCSV(String filePath)
     {
         ArrayList<Participant> participants=new ArrayList<>();
@@ -45,6 +45,7 @@ public class CSVFileHandler {
         return participants;
     }
 
+    //LOAD ORGANIZER CSV TO GET ORGANIZER DATA
     public static ArrayList<Organizer> getOrganizers(String filePath){
         ArrayList<Organizer> organizers=new ArrayList<Organizer>();
 
@@ -68,7 +69,7 @@ public class CSVFileHandler {
         }
         return organizers;
     }
-
+/**
     //-------------VALIDATE THE PARTICIPANT BASED ON CSV DATA--------------
     public static Participant login(String id, String email,ArrayList<Participant> participants){
         for (Participant p : participants) {
@@ -79,10 +80,10 @@ public class CSVFileHandler {
         return null;
     }
 
+**/
 
 
-
-    //---------------SAVE REGISTERED PARTICIPANTS TO CSV---------------------
+    //SAVE REGISTERED PARTICIPANTS TO CSV
     public static void saveParticipantsToCSV(ArrayList<Participant> participants,String pFilePath){
         if(participants==null ||participants.isEmpty()){
             System.out.println("No participants to save!");
@@ -98,6 +99,7 @@ public class CSVFileHandler {
         }
     }
 
+    //CREATE PARTICIPANT CSV IN STRUCTURED FORMAT
     private static FileWriter getFileWriter(ArrayList<Participant> participants, String pFilePath) throws IOException {
         FileWriter fileWriter = new FileWriter(pFilePath);
 

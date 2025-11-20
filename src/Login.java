@@ -4,6 +4,7 @@ public class Login {
     private List<Organizer> organizers;
     private List<Participant> participants;
 
+    //constructor
     public Login(List<Organizer> organizers, List<Participant> participants) {
         this.organizers = organizers;
         this.participants = participants;
@@ -45,6 +46,7 @@ public class Login {
         }
     }
 
+    //LOGIN SCREEN FOR ALL USERS
     public User login() {
         Scanner scanner = new Scanner(System.in);
 
@@ -70,14 +72,6 @@ public class Login {
                 return o;
             }
         }
-
-        // Check in Organizers
-        //for (Organizer o : organizers) {
-        //  if (o.getId().equals(id) && o.getEmail().equals(email)) {
-        //    System.out.println("Organizer Login Successful!");
-        //  return o;
-        //  }
-        //   }
 
         System.out.println("Invalid login!");
         return null;

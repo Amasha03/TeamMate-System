@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Organizer extends User{
@@ -11,21 +8,24 @@ public class Organizer extends User{
     private TeamFormation teamFormation;
     private int teamSize;
 
+    //constructors
     public Organizer(String id, String email, String name, String role) {
         super(id, email);
         this.name=name;
         this.role=role;
         this.teamFormation=new TeamFormation();
     }
-
+/**
     public Organizer(String id, String email, String name, String role,ArrayList<Participant> participants) {
         super(id, email);
         this.name=name;
         this.role=role;
         this.participants=participants;
     }
+**/
 
 
+    //DISPLAYING THE MAIN MENU
     @Override
     public void showMenu() {
         Scanner scanner=new Scanner(System.in);
@@ -95,6 +95,8 @@ public class Organizer extends User{
             }
         }while(choice != 8);
     }
+
+    //DISPLAY ORGANIZER PERSONAL DETAILS
     public void viewOrganizerDetails() {
         System.out.println("\n===== Organizer Details =====");
         System.out.println("ID: " + id);

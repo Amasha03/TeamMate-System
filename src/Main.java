@@ -19,14 +19,6 @@ public class Main {
 
         System.out.println("number of participants loaded: "+participants.size());
 
-        //Participant participant=Login.login(list);
-        //if(participant != null){
-        //    participant.participantMenu();
         }
 
-        //Survey.completeSurvey();
-
-        // **** HAVE TO HANDLE EXCEPTIONS ****
-
- //   }
 }

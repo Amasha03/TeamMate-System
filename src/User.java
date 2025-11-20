@@ -15,5 +15,6 @@ public abstract class User {
         return email;
     }
 
-    public abstract void showMenu();  // Polymorphic menu
+    //MENU FOR PARTICIPANTS AND ORGANIZERS (polymorphic menu)
+    public abstract void showMenu();
 }

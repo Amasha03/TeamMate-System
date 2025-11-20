@@ -11,7 +11,7 @@ public class Participant extends User{
     public String personalityType;
     TeamFormation teamFormation;
 
-    //Constructor
+    //Constructors
     public Participant(String id, String name,String email){
         super(id,email);
         this.name=name;
@@ -26,6 +26,7 @@ public class Participant extends User{
         this.personalityType=personalityType;
     }
 
+    //DISPLAYING THE MAIN MENU
     @Override
     public void showMenu(){
         Scanner scanner = new Scanner(System.in);
@@ -62,6 +63,7 @@ public class Participant extends User{
     }
 
 
+    //VIEW PARTICIPANTS PERSONAL DETAILS
     public void viewParticipantDetails() {
         System.out.println("\n===== Participant Details =====");
         System.out.println("ID: " + id);
@@ -75,6 +77,7 @@ public class Participant extends User{
         }
     }
 
+    //SURVEY FOR THE NEWLY REGISTERED PARTICIPANTS
     public void completeSurvey(){
         this.survey=Survey.completeSurvey();
         this.surveyCompleted=true;
@@ -87,9 +90,7 @@ public class Participant extends User{
     }
 
 
-    private void viewFormedTeams() {
-    }
-
+    //VIEW THE ASSIGNED TEAM FOR A PARTICIPANT
     public void viewTeam() {
         Team myTeam = TeamFormation.TeamOfParticipant(this.id);
 
@@ -135,6 +136,7 @@ public class Participant extends User{
     public String getPreferredGame() {
         return preferredGame;
     }
+
     //setters
     public void setPreferredGame(String preferredGame){
         this.preferredGame=preferredGame;
@@ -164,7 +166,7 @@ public class Participant extends User{
         this.teamFormation=teamFormation;
     }
 
-
+    //Participant Object
     @Override
     public String toString(){
         String result= "ID: "+id+"\nName: "+name+"\nEmail: "+

@@ -24,7 +24,7 @@ public class Survey {
         return preferredRole;
     }
 
-    //personality questions
+    //SURVEY QUESTIONS
     public static Survey completeSurvey() {
         Scanner scanner=new Scanner(System.in);
         int[] surveyScores = new int[5];
@@ -49,38 +49,7 @@ public class Survey {
             }while(score<1||score>5);
             surveyScores[i]=score;
         }
-/**
-        do {
-            System.out.println("Q1: I enjoy taking the lead and guiding others during group activities.");
-            surveyScore = Integer.parseInt(scanner.nextLine());
-        } while (surveyScore < 1 || surveyScore > 5);
-        surveyScores[0] = surveyScore;
 
-        do {
-            System.out.println("Q2: I prefer analyzing situations and coming up with strategic solutions.");
-            surveyScore = Integer.parseInt(scanner.nextLine());
-        } while (surveyScore < 1 || surveyScore > 5);
-        surveyScores[1] = surveyScore;
-
-        do {
-            System.out.println("Q3: I work well with others and enjoy collaborative teamwork.");
-            surveyScore = Integer.parseInt(scanner.nextLine());
-        } while (surveyScore < 1 || surveyScore > 5);
-        surveyScores[2] = surveyScore;
-
-        do {
-            System.out.println("Q4: I am calm under pressure and can help maintain team morale.");
-            surveyScore = Integer.parseInt(scanner.nextLine());
-        } while (surveyScore < 1 || surveyScore > 5);
-        surveyScores[3] = surveyScore;
-
-        do {
-            System.out.println("Q5: I like making quick decisions and adapting in dynamic situations.");
-            surveyScore = Integer.parseInt(scanner.nextLine());
-        } while (surveyScore < 1 || surveyScore > 5);
-        surveyScores[4] = surveyScore;
-
-**/
         //Interests
         System.out.println("Enter your game interests:(eg:Valorant,Dota,FIFA,Basketball,Badminton)");
         String interests = scanner.nextLine();
@@ -106,9 +75,6 @@ public class Survey {
             personalityType="Unknown";
 
 
-        //create objects
-        //this.survey = new Survey(personalityScores, interests, role);
-        //Participant member = new Participant(id, name, email);
 
         //Display full info
         System.out.println("\n------member survey result------");
@@ -119,35 +85,10 @@ public class Survey {
         survey.surveyScores=surveyScores;
         return survey;
 
-        //return new Survey(interests, role, completeSurvey().personalityType);
-    }
-/**
-    //classify personality
-    public String classifyPersonality(){
-        int score=calSurveyScore();
-        if(score>=90)
-            personalityType="Leader";
-        else if(score>=70)
-            personalityType= "Balanced";
-        else if (score>=50)
-            personalityType="Thinker";
-        else
-            personalityType= "unknown";
-        return personalityType;
+
     }
 
-    //calculate personality score
-    public int calSurveyScore(){
-        int total=0;
-        for(int i=0;i<surveyScores.length;i++){
-            total+=surveyScores[i];
-        }
-        return total*4;
-    }
-
-**/
-
-
+    //Survey Object
     @Override
     public String toString(){
         return "\n Preferred Role: "+getPreferredRole()+"\n Interests: "+getInterests();

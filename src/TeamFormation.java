@@ -6,6 +6,7 @@ import java.util.Collections;
 public class TeamFormation implements TeamBuilder{
     private static ArrayList<Team> teams = new ArrayList<>();
 
+    //GENERATING TEAMS ACCORDING TO THE MATCHING ALGORITHM
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize){
         teams.clear();
@@ -60,6 +61,8 @@ public class TeamFormation implements TeamBuilder{
         }
         System.out.println("Teams generated successfully.");
     }
+
+    //DISPLAY ALL GENERATED TEAMS
     @Override
     public void displayTeams(){
         int t=1;
@@ -69,6 +72,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
+    //SAVE GENERATED TEAMS TO A CSV FILE
     @Override
     public void saveTeamsToCSV(String filePath){
 
@@ -91,6 +95,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
+    //FIND WHICH TEAM A PARTICIPANT BELONGS TO
     public static Team TeamOfParticipant (String participantId){
         for(Team team:teams){
             for(Participant p:team.members){
