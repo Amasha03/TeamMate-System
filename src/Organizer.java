@@ -48,7 +48,7 @@ public class Organizer extends User{
                     viewOrganizerDetails();
                     break;
                 case 2:
-                    System.out.println("DEBUG -> participant size = " + participants.size());
+                    System.out.println("Number of participants = " + participants.size());
                     CSVFileHandler.saveParticipantsToCSV(participants, "resources/participants.csv");
                     break;
                 case 3:
@@ -80,8 +80,7 @@ public class Organizer extends User{
 
                     break;
                 case 6:
-                    System.out.println("Enter CSV file path to save teams: ");
-                    String savePath=scanner.nextLine();
+                    String savePath="resources/formed_teams.csv";
                     teamFormation.saveTeamsToCSV(savePath);
                     break;
                 case 7:

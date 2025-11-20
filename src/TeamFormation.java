@@ -83,6 +83,7 @@ public class TeamFormation implements TeamBuilder{
 
                 }
                 teamId++;
+                fw.write("\n");
             }
             System.out.println("Teams successfully saved to  "+teamsFilePath);
         }catch (IOException e){
