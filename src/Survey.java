@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Survey {
     int[] surveyScores=new int[5];
@@ -30,7 +31,7 @@ public class Survey {
         int[] surveyScores = new int[5];
 
 
-        System.out.println("**********MEMBER SURVEY**********");
+        System.out.println("==========MEMBER SURVEY==========");
         System.out.println("Personality Questions:");
         System.out.println("Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree).");
         String[] questions={
@@ -101,6 +102,49 @@ public class Survey {
 
 
     }
+/**
+    //CONCURRENT SURVEY PROCESSING
+    //process survey data for multiple participants in parallel
+
+    public static void processSurveyConcurrently(ArrayList<Participant> participants){
+        if(participants==null||participants.isEmpty()) {
+            return;
+        }
+
+        int numThreads=Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        for (Participant p:participants){
+            executor.submit(() ->{
+                Survey survey = p.survey; //existing survey object
+                if(survey !=null){
+                    int score = 0;
+                    for (int s: survey.surveyScores){
+                        score+=s;
+                    }
+                    survey.personalityScore=score*4;
+                }
+                if(survey.personalityScore>90) {
+                    survey.personalityType = "Leader";
+                }else if(survey.personalityScore>70) {
+                    survey.personalityType = "Balanced";
+                }else if(survey.personalityScore>50) {
+                    survey.personalityType = "Thinker";
+                }else {
+                    survey.personalityType = "Unknown";
+                }
+                p.personalityType=survey.personalityType;
+                p.surveyCompleted=true;
+            });
+        }
+        executor.shutdown();
+        try{
+            executor.awaitTermination(10,TimeUnit.MINUTES);
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+**/
 
     //Survey Object
     @Override
