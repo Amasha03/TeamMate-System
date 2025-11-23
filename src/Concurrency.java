@@ -8,22 +8,25 @@ public class Concurrency {
         this.participants = participants;
     }
 
-    //process survey concurrently
+    //process surveys using threads
     public void processSurveys(){
         if (participants==null||participants.isEmpty()){
             return;
         }
-        int numThreads = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        ArrayList <Thread> threads = new ArrayList<>();
 
         for(Participant p : participants){
-            executor.submit(() ->{
+            Thread t=new Thread(() ->{
                 Survey survey = p.survey;
+
                 if(survey != null){
                     int score = 0;
+
                     for(int s: survey.surveyScores){
                         score += s;
                     }
+
                     survey.personalityScore = score*4;
 
                     if(survey.personalityScore > 90){
@@ -39,42 +42,53 @@ public class Concurrency {
                     p.surveyCompleted=true;
                 }
             });
+        threads.add(t);
+        t.start();
         }
-        executor.shutdown();
-        try{
-            executor.awaitTermination(10,TimeUnit.MINUTES);
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        for(Thread t : threads){
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     //Generate teams concurrently
-    public ArrayList<Team> formTeams(int teamSize){
+    public ArrayList<Team> formTeams(int teamSize) {
         ArrayList<Team> teams = new ArrayList<>();
-        if(participants==null||participants.isEmpty()){
+
+        if (participants == null || participants.isEmpty()) {
             return teams;
         }
         Collections.shuffle(participants);
-        int totalTeams=(int) Math.ceil((double)participants.size()/teamSize);
-        for(int i=0;i<totalTeams;i++){
+
+        int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
+        for (int i = 0; i < totalTeams; i++) {
             teams.add(new Team(teamSize));
         }
 
-        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        ArrayList<Thread> threads = new ArrayList<>();
 
-        for (int i=0; i<participants.size();i++){
+        for (int i = 0; i < participants.size(); i++) {
             final int idx = i;
-            executor.submit(()->{
-                synchronized(teams){
-                    teams.get(idx%teams.size()).addMember(participants.get(idx));
+
+            Thread t = new Thread(() -> {
+                synchronized (teams) {
+                    teams.get(idx % teams.size()).addMember(participants.get(idx));
                 }
             });
+
+            threads.add(t);
+            t.start();
         }
-        executor.shutdown();
-        try{
-            executor.awaitTermination(10,TimeUnit.MINUTES);
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        for (Thread t : threads) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         return teams;
     }

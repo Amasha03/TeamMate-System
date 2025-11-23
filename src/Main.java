@@ -19,20 +19,21 @@ public class Main {
 
         System.out.println("number of participants loaded: "+participants.size());
 
-        /**
+
         //concurrency
         ArrayList<Participant> p=CSVFileHandler.loadParticipantCSV("resources/participants.csv");
         Concurrency concurrency = new Concurrency(p);
         concurrency.processSurveys();
 
         TeamFormation teamFormation=new TeamFormation();
-        Organizer.showMenu().;
+        //Organizer.showMenu().;
+
 
         int teamNum=1;
-        for(Team t : teams){
+        for(Team t : TeamFormation.teams){
             System.out.println(teamNum+" "+teamNum++);
             System.out.println(t);
         }
-**/        }
+    }
 
 }

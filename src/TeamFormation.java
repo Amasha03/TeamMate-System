@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TeamFormation implements TeamBuilder{
-    private static ArrayList<Team> teams = new ArrayList<>();
+    public static ArrayList<Team> teams = new ArrayList<>();
 
     //GENERATING TEAMS ACCORDING TO THE MATCHING ALGORITHM
     @Override
@@ -19,8 +19,6 @@ public class TeamFormation implements TeamBuilder{
             return;
         }
 
-        //Shuffle participants to randomize
-        Collections.shuffle(participants);
 
         //calculate number of teams
         int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
@@ -44,6 +42,11 @@ public class TeamFormation implements TeamBuilder{
                     break;
             }
         }
+
+        //sort participant list by skill descending
+        leaders.sort((a,b) ->Integer.compare(b.getSkillLevel(),a.getSkillLevel()));
+        thinkers.sort((a,b) ->Integer.compare(b.getSkillLevel(),a.getSkillLevel()));
+        balanced.sort((a,b) ->Integer.compare(b.getSkillLevel(),a.getSkillLevel()));
 
         //Add one leader per team
         int teamIndex=0;
