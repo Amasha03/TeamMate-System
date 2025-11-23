@@ -7,13 +7,15 @@ public class Survey {
     String preferredRole;
     String personalityType;
     int personalityScore;
+    int skillLevel;
 
     //constructor
-    public Survey(String interests,String preferredRole,int personalityScore,String personalityType){
+    public Survey(String interests,String preferredRole,int personalityScore,String personalityType,int skillLevel){
         this.interests=interests;
         this.preferredRole=preferredRole;
         this.personalityScore=personalityScore;
         this.personalityType=personalityType;
+        this.skillLevel=skillLevel;
     }
 
 
@@ -23,6 +25,9 @@ public class Survey {
     }
     public String getPreferredRole(){
         return preferredRole;
+    }
+    public int getSkillLevel(){
+        return skillLevel;
     }
 
     //SURVEY QUESTIONS
@@ -73,6 +78,13 @@ public class Survey {
             System.out.println("Role cannot be empty");
         }
 
+        //Skill level
+        System.out.println("Enter your skill level (1-10): ");
+        int skillLevel = scanner.nextInt();
+        if(skillLevel<1||skillLevel>10){
+            System.out.println("Invalid skill level. Please enter a number between 1-10.");
+        }
+
         //calculate personality score
             int personalityScore=0;
             for(int score : surveyScores)
@@ -93,10 +105,10 @@ public class Survey {
 
         //Display full info
         System.out.println("\n------member survey result------");
-        System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Score: "+personalityScore+"\nPersonality Type: "+ personalityType);
+        System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Score: "+personalityScore+"\nPersonality Type: "+ personalityType+"\nSkill Level: "+skillLevel);
 
 
-        Survey survey = new Survey(interests,role,personalityScore, personalityType);
+        Survey survey = new Survey(interests,role,personalityScore, personalityType, skillLevel);
         survey.surveyScores=surveyScores;
         return survey;
 
@@ -149,7 +161,7 @@ public class Survey {
     //Survey Object
     @Override
     public String toString(){
-        return "\n Preferred Role: "+getPreferredRole()+"\n Interests: "+getInterests();
+        return "\n Preferred Role: "+getPreferredRole()+"\n Interests: "+getInterests()+"\n Skill Level: "+getSkillLevel();
     }
     
 }
