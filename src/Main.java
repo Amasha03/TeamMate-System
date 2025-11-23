@@ -17,7 +17,7 @@ public class Main {
         // Call home screen
         loginSystem.showHomeScreen();
 
-        System.out.println("number of participants loaded: "+participants.size());
+        //System.out.println("number of participants loaded: "+participants.size());
 
 
         //concurrency

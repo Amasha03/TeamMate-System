@@ -33,14 +33,14 @@ public class Organizer extends User{
         do {
             System.out.println("===== Organizer Menu =====");
             System.out.println("1. View Personal Details");
-            System.out.println("2. Save Participants to CSV");
+            System.out.println("2. Save CSV");
             System.out.println("3. Upload Participant CSV");
             System.out.println("4. Set Team Size");
             System.out.println("5. Generate Teams");
-            System.out.println("6. Save Teams to CSV");
-            System.out.println("7. View Formed Teams");
-            System.out.println("8. Logout");
-            System.out.println("Enter your choice");
+           // System.out.println("6. Save Teams to CSV");
+            System.out.println("6. View Formed Teams");
+            System.out.println("7. Logout");
+            System.out.print("Enter your choice");
             choice=scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
@@ -48,17 +48,33 @@ public class Organizer extends User{
                     viewOrganizerDetails();
                     break;
                 case 2:
-                    System.out.println("Number of participants = " + participants.size());
-                    CSVFileHandler.saveParticipantsToCSV(participants, "resources/participants.csv");
+                    Scanner sc=new Scanner(System.in);
+                    System.out.println("=====Save CSV ======");
+                    System.out.println("1.Save participant CSV");
+                    System.out.println("2.Save Formed Teams CSV");
+                    System.out.print("Enter your choice: ");
+                    int saveChoice=sc.nextInt();
+                    sc.nextLine();
+                    switch (saveChoice) {
+                        case 1:
+                            System.out.println("Number of participants = " + participants.size());
+                            CSVFileHandler.saveParticipantsToCSV(participants, "resources/participants.csv");
+                            break;
+                        case 2:
+                            String savePath="resources/formed_teams.csv";
+                            CSVFileHandler.saveTeamsToCSV(savePath);
+                            break;
+                    }
                     break;
+
                 case 3:
-                    System.out.println("Enter CSV file path: ");
+                    System.out.print("Enter CSV file path: ");
                     String path = scanner.nextLine();
                     participants = CSVFileHandler.loadParticipantCSV(path);
                     System.out.println("Successfully loaded " + participants.size() + " participants.");
                     break;
                 case 4:
-                    System.out.println("Enter team size: ");
+                    System.out.print("Enter team size: ");
                     teamSize = Integer.parseInt(scanner.nextLine());
                     if (teamSize <= 0) {
                         System.out.println("Invalid team size.");
@@ -77,23 +93,18 @@ public class Organizer extends User{
                             p.setTeamFormation(teamFormation);
                         }
                     }
-
                     break;
                 case 6:
-                    String savePath="resources/formed_teams.csv";
-                    teamFormation.saveTeamsToCSV(savePath);
-                    break;
-                case 7:
                     teamFormation.displayTeams();
                     break;
-                case 8:
+                case 7:
                     System.out.println("Logging out...");
                     break;
                 default:
                     System.out.println("Invalid choice");
                     break;
             }
-        }while(choice != 8);
+        }while(choice != 7);
     }
 
     //DISPLAY ORGANIZER PERSONAL DETAILS

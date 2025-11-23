@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class TeamFormation implements TeamBuilder{
     public static ArrayList<Team> teams = new ArrayList<>();
@@ -79,38 +75,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
-    //SAVE GENERATED TEAMS TO A CSV FILE
-    @Override
-    public void saveTeamsToCSV(String filePath){
-        String teamsFilePath="resources/formed_teams.csv";
 
-        try{
-            File directory = new File("resources");
-            if(!directory.exists()){
-                if(!directory.mkdirs()){
-                    System.out.println("Error creating directory");
-                    return;
-                }
-            }
-            FileWriter fw = new FileWriter(teamsFilePath);
-            fw.write("Team Id,Participant Id,Participant Name,Preferred Game,Preferred Role,Personality Type,Skill Level\n");
-            int teamId=1;
-            for(Team team:teams){
-                for(Participant participant: team.members){
-                    fw.write(teamId+","+participant.id+","+participant.getName()+","+participant.getPreferredGame()+","+participant.getPreferredRole()+","+participant.getPersonalityType()+","+participant.getSkillLevel()+"\n");
-
-                }
-                teamId++;
-                fw.write("\n");
-            }
-            fw.close();
-            System.out.println("Teams successfully saved to  "+teamsFilePath);
-        }catch (IOException e){
-            System.out.println("Error occurred in saving CSV: "+e.getMessage());
-        }catch(Exception e){
-            System.out.println("Unexpected error occurred.");
-        }
-    }
 
     //FIND WHICH TEAM A PARTICIPANT BELONGS TO
     public static Team TeamOfParticipant (String participantId){

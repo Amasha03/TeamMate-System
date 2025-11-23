@@ -17,8 +17,8 @@ public class Login {
         while (true) {
             System.out.println("====== TeamMate System ======");
             System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
+          //  System.out.println("2. Register");
+            System.out.println("2. Exit");
             System.out.print("Enter your choice: ");
 
             String input = scanner.nextLine();
@@ -26,12 +26,12 @@ public class Login {
 
             try{
                 choice = Integer.parseInt(input);
-                if(choice<1 || choice>3){
-                    System.out.println("Invalid choice. Please enter a number between 1-4.");
+                if(choice<1 || choice>2){
+                    System.out.println("Invalid choice. Please choose 1 or 2");
                     continue;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice. Please enter a number between 1-3.");
+                System.out.println("Invalid choice. Please enter 1 or 2.");
                 continue;
             }
 
@@ -44,11 +44,6 @@ public class Login {
                     break;
 
                 case 2:
-                    Register.register((ArrayList<Participant>) participants);
-
-                    break;
-
-                case 3:
                     System.out.println("Goodbye!");
                     return;
 
@@ -63,9 +58,9 @@ public class Login {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("======Welcome to TeamMate System======");
-        System.out.println("Enter your ID: ");
+        System.out.print("Enter your ID: ");
         String id = scanner.nextLine();
-        System.out.println("Enter your Email: ");
+        System.out.print("Enter your Email: ");
         String email = scanner.nextLine();
 
         // Check in Participants
@@ -86,6 +81,14 @@ public class Login {
         }
 
         System.out.println("Invalid login!");
+
+        //register to the system
+        System.out.print("Do you want to register to the system?(yes/no): ");
+        String choice = scanner.nextLine();
+        if (choice.equalsIgnoreCase("yes")) {
+            return Register.register((ArrayList<Participant>) this.participants);
+        }
+
         return null;
     }
 
