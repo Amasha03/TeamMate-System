@@ -75,7 +75,7 @@ public class Login {
         for (Organizer o : organizers) {
             if (o.getId().equalsIgnoreCase(id) && o.getEmail().equalsIgnoreCase(email)) {
                 System.out.println("Organizer Login Successful!");
-                o.participants=(ArrayList<Participant>) this.participants;
+                //o.participants=(ArrayList<Participant>) this.participants;
                 return o;
             }
         }

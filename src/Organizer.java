@@ -37,10 +37,9 @@ public class Organizer extends User{
             System.out.println("3. Upload Participant CSV");
             System.out.println("4. Set Team Size");
             System.out.println("5. Generate Teams");
-           // System.out.println("6. Save Teams to CSV");
             System.out.println("6. View Formed Teams");
             System.out.println("7. Logout");
-            System.out.print("Enter your choice");
+            System.out.print("Enter your choice: ");
             choice=scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
