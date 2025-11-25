@@ -63,7 +63,7 @@ public class Participant extends User{
                     completeSurvey();}
                     break;
                 case 3:
-                    viewTeam();
+                    teamFormation.displayTeams();
                     break;
                 case 4:
                     System.out.println("Logging out....");

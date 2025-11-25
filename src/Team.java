@@ -17,6 +17,24 @@ public class Team {
         members.add(p);
         return true;
     }
+
+    public double getAverageSkill() {
+        if (members.isEmpty()) return 0;
+        int total = 0;
+        for (Participant p : members) {
+            total += p.getSkillLevel();
+        }
+        return (double) total / members.size();
+    }
+
+    public int countRole(String role) {
+        int count = 0;
+        for (Participant p : members) {
+            if (p.personalityType.equalsIgnoreCase(role)) count++;
+        }
+        return count;
+    }
+
     //Team Object
     @Override
     public String toString(){
