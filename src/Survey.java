@@ -52,12 +52,12 @@ public class Survey {
                 System.out.println(questions[i]);
                 String input=scanner.nextLine();
             try{
-            int score=Integer.parseInt(input);
-            if(score>=0 && score<=5){
-                surveyScores[i]=score;
-                break;
-            }else{
-                System.out.println("Invalid answer. Please enter a number between 1 and 5.");
+                int score=Integer.parseInt(input);
+                if(score>=0 && score<=5){
+                    surveyScores[i]=score;
+                    break;
+                }else{
+                    System.out.println("Invalid answer. Please enter a number between 1 and 5.");
             }
             }catch(NumberFormatException e){
                 System.out.println("Invalid answer. Please enter a number between 1 and 5.");}
@@ -65,24 +65,49 @@ public class Survey {
         }
 
         //Interests
-        System.out.println("Enter your game interests:(eg:Valorant,Dota,FIFA,Basketball,Badminton)");
-        String interests = scanner.nextLine();
-        if(interests.isEmpty()){
-            System.out.println("Interests cannot be empty");
+        String interests;
+        while(true){
+            System.out.println("Enter your game interest:[Valorant,Dota,FIFA,Basketball,Badminton]");
+            interests = scanner.nextLine();
+            if(interests.isEmpty()){
+                System.out.println("Interests cannot be empty");
+            }else{
+                break;
+            }
         }
 
+
         //Preferred role
-        System.out.println("Enter your preferred role: (eg:Strategist,Attacker,Defender,Supporter,Coordinator)");
-        String role = scanner.nextLine();
-        if(role.isEmpty()){
-            System.out.println("Role cannot be empty");
+        System.out.println("\n[Strategist: Focuses on tactics and planning. Keeps the bigger picture in mind during gameplay]");
+        System.out.println("[Attacker: Frontline player. Good reflexes, offensive tactics, quick execution]");
+        System.out.println("[Defender: Protects and supports team stability. Good under pressure and team-focused]");
+        System.out.println("[Supporter: Jack-of-all-trades. Adapts roles, ensures smooth coordination]");
+        System.out.println("[Coordinator: Communication lead. Keeps the team informed and organized in real time]");
+        String role;
+        while(true){
+            System.out.println("\nEnter your preferred role: (eg:Strategist,Attacker,Defender,Supporter,Coordinator)");
+            role=scanner.nextLine();
+            if(role.isEmpty()){
+                System.out.println("Roles cannot be empty");
+            }else {
+                break;
+            }
         }
 
         //Skill level
-        System.out.println("Enter your skill level (1-10): ");
-        int skillLevel = scanner.nextInt();
-        if(skillLevel<1||skillLevel>10){
-            System.out.println("Invalid skill level. Please enter a number between 1-10.");
+        int skillLevel;
+        while(true){
+            System.out.println("Enter your skill level (1-10): ");
+            String input=scanner.nextLine();
+            try{
+                skillLevel=Integer.parseInt(input);
+                if(skillLevel<1||skillLevel>10){
+                    System.out.println("Invalid skill level. Please enter a number between 1-10.");
+                    continue;
+                }
+                break;
+        }catch (NumberFormatException e){
+            System.out.println("Invalid skill level. Please enter a number between 1 and 10.");}
         }
 
         //calculate personality score
@@ -114,49 +139,7 @@ public class Survey {
 
 
     }
-/**
-    //CONCURRENT SURVEY PROCESSING
-    //process survey data for multiple participants in parallel
 
-    public static void processSurveyConcurrently(ArrayList<Participant> participants){
-        if(participants==null||participants.isEmpty()) {
-            return;
-        }
-
-        int numThreads=Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-
-        for (Participant p:participants){
-            executor.submit(() ->{
-                Survey survey = p.survey; //existing survey object
-                if(survey !=null){
-                    int score = 0;
-                    for (int s: survey.surveyScores){
-                        score+=s;
-                    }
-                    survey.personalityScore=score*4;
-                }
-                if(survey.personalityScore>90) {
-                    survey.personalityType = "Leader";
-                }else if(survey.personalityScore>70) {
-                    survey.personalityType = "Balanced";
-                }else if(survey.personalityScore>50) {
-                    survey.personalityType = "Thinker";
-                }else {
-                    survey.personalityType = "Unknown";
-                }
-                p.personalityType=survey.personalityType;
-                p.surveyCompleted=true;
-            });
-        }
-        executor.shutdown();
-        try{
-            executor.awaitTermination(10,TimeUnit.MINUTES);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-**/
 
     //Survey Object
     @Override

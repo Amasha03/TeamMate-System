@@ -57,16 +57,19 @@ public class Login {
     public User login() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("======Welcome to TeamMate System======");
+        System.out.println("\n======Welcome to TeamMate System======");
         System.out.print("Enter your ID: ");
         String id = scanner.nextLine();
         System.out.print("Enter your Email: ");
         String email = scanner.nextLine();
+        if (email.isEmpty() || id.isEmpty()) {
+            System.out.println("Id and Email cannot be empty! Please enter a valid Id and Email.");
+        }
 
         // Check in Participants
         for (Participant p : participants) {
             if (p.getId().equalsIgnoreCase(id) && p.getEmail().equalsIgnoreCase(email)) {
-                System.out.println("Participant Login Successful!");
+                System.out.println("\nParticipant Login Successful!");
                 return p;
             }
         }
@@ -74,7 +77,7 @@ public class Login {
         // Check in Organizers
         for (Organizer o : organizers) {
             if (o.getId().equalsIgnoreCase(id) && o.getEmail().equalsIgnoreCase(email)) {
-                System.out.println("Organizer Login Successful!");
+                System.out.println("\nOrganizer Login Successful!");
                 //o.participants=(ArrayList<Participant>) this.participants;
                 return o;
             }
@@ -83,7 +86,7 @@ public class Login {
         System.out.println("Invalid login!");
 
         //register to the system
-        System.out.print("Do you want to register to the system?(yes/no): ");
+        System.out.print("\nDo you want to register to the system?(yes/no): ");
         String choice = scanner.nextLine();
         if (choice.equalsIgnoreCase("yes")) {
             return Register.register((ArrayList<Participant>) this.participants);

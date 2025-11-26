@@ -10,7 +10,7 @@ public class TeamFormation implements TeamBuilder{
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize) {
         teams.clear();
-        if (participants.isEmpty() || participants==null) {
+        if (participants==null||participants.isEmpty()) {
             System.out.println("Please upload the participant details CSV first!");
             return;
         } else if (teamSize <=0) {

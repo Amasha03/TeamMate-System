@@ -69,27 +69,39 @@ public class Organizer extends User{
                 case 3:
                     System.out.print("Enter CSV file path: ");
                     String path = scanner.nextLine();
-                    participants = CSVFileHandler.loadParticipantCSV(path);
-                    System.out.println("Successfully loaded " + participants.size() + " participants.");
-                    break;
+                    try {
+                        participants = CSVFileHandler.loadParticipantCSV(path);
+                        System.out.println("Successfully loaded " + participants.size() + " participants.");
+                    }catch (Exception e) {
+                        System.out.println("Failed to load CSV file: " + e.getMessage());
+                    }
                 case 4:
                     System.out.print("Enter team size: ");
-                    teamSize = Integer.parseInt(scanner.nextLine());
-                    if (teamSize <= 0) {
-                        System.out.println("Invalid team size.");
-                    } else {
-                        System.out.println("Successfully set team size to " + teamSize);
+                    try{
+                        teamSize = Integer.parseInt(scanner.nextLine());
+                            if (teamSize <= 2) {
+                            System.out.println("Invalid team size. [Minimum team size should be 3]");
+                        }
+
+                    }catch(NumberFormatException e){
+                        System.out.println("Invalid input! Enter a numeric team size.");
                     }
+                    System.out.println("\nSuccessfully set team size to " + teamSize);
+
 
                     break;
                 case 5:
                     if (participants.isEmpty()) {
-                        System.out.println("Please upload participants file.");
+                        System.out.println("Please upload participants file before generating teams.");
                     } else {
-                        teamFormation.generateTeams(participants, teamSize);
+                        try{
+                            teamFormation.generateTeams(participants, teamSize);
 
-                        for (Participant p : participants) {
-                            p.setTeamFormation(teamFormation);
+                            for (Participant p : participants) {
+                                p.setTeamFormation(teamFormation);
+                            }
+                        }catch (Exception e) {
+                            System.out.println("Failed to generate teams.");
                         }
                     }
                     break;

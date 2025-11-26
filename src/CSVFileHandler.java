@@ -92,7 +92,6 @@ public class CSVFileHandler {
     public static void saveParticipantsToCSV(ArrayList<Participant> participants,String pFilePath){
         if(participants==null ||participants.isEmpty()){
             System.out.println("No participants to save!");
-            System.out.println("File Path: "+pFilePath);
             return;
         }
         try{

@@ -22,28 +22,34 @@ public class Concurrency {
 
         for(Participant p : participants){
             Thread t=new Thread(() ->{
-                Survey survey = p.survey;
+                try{
+                    Survey survey = p.survey;
 
-                if(survey != null){
-                    int score = 0;
+                    if(survey != null) {
+                        int score = 0;
 
-                    for(int s: survey.surveyScores){
-                        score += s;
+                        for (int s : survey.surveyScores) {
+                            score += s;
+                        }
+
+                        survey.personalityScore = score * 4;
+
+                        if (survey.personalityScore > 90) {
+                            survey.personalityType = "Leader";
+                        } else if (survey.personalityScore > 70) {
+                            survey.personalityType = "Balanced";
+                        } else if (survey.personalityScore > 50) {
+                            survey.personalityType = "Thinker";
+                        } else if(survey.personalityScore > 0) {
+                            survey.personalityType = "Unknown";
+                        }else{
+                            System.out.println("No survey found for participant "+p.getId());
+                        }
+                        p.personalityType = survey.personalityType;
+                        p.surveyCompleted = true;
                     }
-
-                    survey.personalityScore = score*4;
-
-                    if(survey.personalityScore > 90){
-                        survey.personalityType="Leader";
-                    } else if(survey.personalityScore > 70) {
-                        survey.personalityType="Balanced";
-                    } else if (survey.personalityScore>50) {
-                        survey.personalityType="Thinker";
-                    }else{
-                        survey.personalityType="Unknown";
-                    }
-                    p.personalityType=survey.personalityType;
-                    p.surveyCompleted=true;
+                }catch (Exception e) {
+                    System.out.println("Error in processing Survey!"+e.getMessage());
                 }
             });
         threads.add(t);

@@ -8,6 +8,7 @@ public class Main {
         ArrayList<Participant> participants = CSVFileHandler.loadParticipantCSV("resources/participants_sample.csv");
         ArrayList<Organizer> organizers =CSVFileHandler.getOrganizers("resources/organizer_sample.csv");
 
+
         for(Organizer o : organizers){
             o.participants=participants;
         }
@@ -26,12 +27,7 @@ public class Main {
         //TeamFormation teamFormation=new TeamFormation();
         //Organizer.showMenu().;
 
-/**
-        int teamNum=1;
-        for(Team t : TeamFormation.teams){
-            System.out.println(teamNum+" "+teamNum++);
-            System.out.println(t);
-        }**/
+
     }
 
 }
