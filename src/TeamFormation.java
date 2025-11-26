@@ -10,11 +10,11 @@ public class TeamFormation implements TeamBuilder{
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize) {
         teams.clear();
-        if (participants.isEmpty()) {
-            System.out.println("Participants list empty.");
+        if (participants.isEmpty() || participants==null) {
+            System.out.println("Please upload the participant details CSV first!");
             return;
-        } else if (teamSize <= 2) {
-            System.out.println("Minimum team size should be 3");
+        } else if (teamSize <=0) {
+            System.out.println("Please define the team size!");
             return;
         }
 

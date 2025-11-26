@@ -1,9 +1,13 @@
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CSVFileHandler {
     public CSVFileHandler() throws IOException {
     }
+
+    private static final Logger logger = Logger.getLogger(CSVFileHandler.class.getName());
 
     //LOAD PARTICIPANT CSV TO GET PARTICIPANT DATA
     public static ArrayList<Participant> loadParticipantCSV(String filePath)
@@ -39,14 +43,15 @@ public class CSVFileHandler {
 
                 }
             }
+            logger.info("Loaded "+participants.size()+" participants from "+filePath);
         }
         catch(FileNotFoundException nf){
-            System.out.println("File not found");
+            logger.severe("File not found: "+filePath);
         }catch(IOException ioe){
-            System.out.println("Error reading file");
+            logger.severe("Error reading file: "+filePath+"-"+ioe.getMessage());
         }
         catch (Exception e) {
-            System.out.println("Unexpected error occurred.");
+            logger.log(Level.SEVERE,"Unexpected error occurred.",e);
         }
         return participants;
     }
@@ -70,13 +75,14 @@ public class CSVFileHandler {
                 Organizer organizer=new Organizer(id,email,name,role);
                 organizers.add(organizer);
             }
+            logger.info("Loaded "+organizers.size()+" organizers from "+filePath);
         }
         catch(FileNotFoundException nf){
-            System.out.println("File not found");
+            logger.severe("File not found : "+filePath);
         }catch(IOException ioe){
-            System.out.println("Error reading file");
+            logger.severe("Error reading file: "+filePath+"-"+ioe.getMessage());
         }catch (Exception e){
-            System.out.println("Unexpected error occurred.");
+            logger.log(Level.SEVERE,"Unexpected error occurred.",e);
         }
         return organizers;
     }
@@ -121,7 +127,7 @@ public class CSVFileHandler {
             File directory = new File("resources");
             if(!directory.exists()){
                 if(!directory.mkdirs()){
-                    System.out.println("Error creating directory");
+                    logger.severe("Error creating directory");
                     return;
                 }
             }
@@ -137,11 +143,12 @@ public class CSVFileHandler {
                 fw.write("\n");
             }
             fw.close();
-            System.out.println("Teams successfully saved to  "+teamsFilePath);
+
+            logger.severe("Teams successfully saved to  "+teamsFilePath);
         }catch (IOException e){
-            System.out.println("Error occurred in saving CSV: "+e.getMessage());
+            logger.severe("Error occurred in saving CSV: "+e.getMessage());
         }catch(Exception e){
-            System.out.println("Unexpected error occurred.");
+            logger.log(Level.SEVERE,"Unexpected error occurred.");
         }
     }
 
