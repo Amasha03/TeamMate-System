@@ -1,8 +1,12 @@
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 public class Concurrency {
     private ArrayList<Participant> participants;
+
+    private final ExecutorService executor = Executors.newFixedThreadPool(5);
+
 
     public Concurrency(ArrayList<Participant> participants){
         this.participants = participants;
@@ -55,42 +59,29 @@ public class Concurrency {
 
     }
 
+    private final TeamFormation teamFormation = new TeamFormation();
+
     //Generate teams concurrently
-    public ArrayList<Team> formTeams(int teamSize) {
-        ArrayList<Team> teams = new ArrayList<>();
+    public void formTeams(ArrayList<Participant> participants,int teamSize) {
 
-        if (participants == null || participants.isEmpty()) {
-            return teams;
+        if (participants==null||participants.isEmpty()){
+            System.out.println("No participants available.");
+            return;
         }
-        Collections.shuffle(participants);
+        try{
+            //create teams(threads)
+            Future<?> createTeamsFuture = executor.submit(() -> teamFormation.generateTeams(participants,teamSize));
 
-        int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
-        for (int i = 0; i < totalTeams; i++) {
-            teams.add(new Team(teamSize));
+            //wait for teams to be created
+            createTeamsFuture.get();
+
+        }catch(Exception e){
+            System.out.println("Error during concurrent team formation.");
+            e.printStackTrace();
         }
-
-        ArrayList<Thread> threads = new ArrayList<>();
-
-        for (int i = 0; i < participants.size(); i++) {
-            final int idx = i;
-
-            Thread t = new Thread(() -> {
-                synchronized (teams) {
-                    teams.get(idx % teams.size()).addMember(participants.get(idx));
-                }
-            });
-
-            threads.add(t);
-            t.start();
-        }
-        for (Thread t : threads) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return teams;
+    }
+    public void shutdown(){
+        executor.shutdown();
     }
 
 

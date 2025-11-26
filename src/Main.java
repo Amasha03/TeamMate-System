@@ -17,23 +17,21 @@ public class Main {
         // Call home screen
         loginSystem.showHomeScreen();
 
-        //System.out.println("number of participants loaded: "+participants.size());
-
-
         //concurrency
-        ArrayList<Participant> p=CSVFileHandler.loadParticipantCSV("resources/participants.csv");
-        Concurrency concurrency = new Concurrency(p);
+        Concurrency concurrency = new Concurrency(participants);
         concurrency.processSurveys();
+        concurrency.formTeams(participants,5);
+        concurrency.shutdown();
 
-        TeamFormation teamFormation=new TeamFormation();
+        //TeamFormation teamFormation=new TeamFormation();
         //Organizer.showMenu().;
 
-
+/**
         int teamNum=1;
         for(Team t : TeamFormation.teams){
             System.out.println(teamNum+" "+teamNum++);
             System.out.println(t);
-        }
+        }**/
     }
 
 }
