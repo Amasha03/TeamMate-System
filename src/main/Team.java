@@ -1,8 +1,9 @@
+package main;
 import java.util.*;
 public class Team {
     String teamID;
     int teamSize;
-    ArrayList<Participant> members=new ArrayList<>();
+    public ArrayList<Participant> members=new ArrayList<>();
 
 
     public Team(int teamSize) {

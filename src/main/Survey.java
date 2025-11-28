@@ -1,3 +1,4 @@
+package main;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -5,8 +6,8 @@ public class Survey {
     int[] surveyScores=new int[5];
     String interests;
     String preferredRole;
-    String personalityType;
-    int personalityScore;
+    public String personalityType;
+    public int personalityScore;
     int skillLevel;
 
     //constructor

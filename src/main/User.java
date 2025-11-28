@@ -1,3 +1,4 @@
+package main;
 public abstract class User {
     String id;
     String email;
@@ -32,6 +33,6 @@ public abstract class User {
         if (email == null || email.trim().isEmpty()) {
             return false;
         }
-        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+");
+        return email.matches("[a-zA-Z0-9]+@university.edu");
     }
 }
