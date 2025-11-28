@@ -1,12 +1,8 @@
 package Test;
 import main.Participant;
-import main.Survey;
-import main.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class UserTest {
     private final Participant testUser=new Participant("P201","Participant_201","user201@university.edu");

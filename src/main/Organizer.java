@@ -6,7 +6,7 @@ public class Organizer extends User{
     private String name;
     private String role;
     public ArrayList<Participant> participants=new ArrayList<>();
-    private TeamFormation teamFormation;
+    public TeamFormation teamFormation;
     private int teamSize;
 
     //constructors

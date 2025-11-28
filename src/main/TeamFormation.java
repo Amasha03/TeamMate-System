@@ -66,7 +66,7 @@ public class TeamFormation implements TeamBuilder{
         System.out.println("\nTeams generated successfully.\n");
     }
 
-    private void assignLeadersAndThinkers(ArrayList<Participant> leaders, ArrayList<Participant> thinkers, int totalTeams) {
+    public void assignLeadersAndThinkers(ArrayList<Participant> leaders, ArrayList<Participant> thinkers, int totalTeams) {
         //leaders top -> bottom
         int teamIndex = 0;
         for (Participant p : leaders) {
@@ -86,7 +86,7 @@ public class TeamFormation implements TeamBuilder{
 
     }
 
-    private void assignBalancedParticipants(ArrayList<Participant> balanced, int teamSize) {
+    public void assignBalancedParticipants(ArrayList<Participant> balanced, int teamSize) {
         for(Participant p : balanced){
             //find team with lowest average skill that is not full
             Team weakest=teams.stream().filter(t->t.members.size()<teamSize).min(Comparator.comparingDouble(Team::getAverageSkill)).orElse(null);
@@ -96,7 +96,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
-    private void finalBalanceTeams() {
+    public void finalBalanceTeams() {
         for(Team t:teams){
             if(t.countRole("leader")==0){
                 moveRoleToTeam("leader",t);
@@ -107,7 +107,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
-    private void moveRoleToTeam(String role, Team target) {
+    public void moveRoleToTeam(String role, Team target) {
         for(Team source : teams){
             if(source==target){
                 continue;
@@ -156,10 +156,15 @@ public class TeamFormation implements TeamBuilder{
 
     //FIND WHICH TEAM A PARTICIPANT BELONGS TO
     public static Team TeamOfParticipant (String participantId){
+        if(teams==null){
+            System.out.println("No teams have been created yet.");
+        }
         for(Team team:teams){
             for(Participant p:team.members){
                 if(p.id.equals(participantId)){
                     return team;
+                } else {
+                    System.out.println("You have not assigned to any team.");
                 }
             }
         }

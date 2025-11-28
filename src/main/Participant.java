@@ -64,7 +64,11 @@ public class Participant extends User{
                     completeSurvey();}
                     break;
                 case 3:
-                    teamFormation.displayTeams();
+                    if(teamFormation==null){
+                        System.out.println("Teams are not generated yet.");
+                    }else {
+                        teamFormation.displayTeams();
+                    }
                     break;
                 case 4:
                     System.out.println("Logging out....");

@@ -2,8 +2,8 @@ package main;
 import java.util.*;
 
 public class Login {
-    private List<Organizer> organizers;
-    private List<Participant> participants;
+    public List<Organizer> organizers;
+    public List<Participant> participants;
 
     //constructor
     public Login(List<Organizer> organizers, List<Participant> participants) {
