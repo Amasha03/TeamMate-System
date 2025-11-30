@@ -68,23 +68,22 @@ public class Login {
         }
 
         // Check in Participants
-        for (Participant p : participants) {
+        for (Participant p : participants) {   //1.1 (SD-login)
             if (p.getId().equalsIgnoreCase(id) && p.getEmail().equalsIgnoreCase(email)) {
-                System.out.println("\nParticipant Login Successful!");
+                System.out.println("\nParticipant Login Successful!");  //1.1.1 (SD-login)
                 return p;
             }
         }
 
         // Check in Organizers
-        for (Organizer o : organizers) {
+        for (Organizer o : organizers) {    //1.2 (SD-login)
             if (o.getId().equalsIgnoreCase(id) && o.getEmail().equalsIgnoreCase(email)) {
-                System.out.println("\nOrganizer Login Successful!");
-                //o.participants=(ArrayList<Participant>) this.participants;
+                System.out.println("\nOrganizer Login Successful!");    //1.2.1 (SD-login)
                 return o;
             }
         }
 
-        System.out.println("Invalid login!");
+        System.out.println("Invalid login!");   //1.3(SD-login)
 
         //register to the system
         System.out.print("\nDo you want to register to the system?(yes/no): ");

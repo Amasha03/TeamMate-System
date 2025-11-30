@@ -4,7 +4,7 @@ import java.util.*;
 public class Register {
 
     //REGISTER A NEW PARTICIPANT
-    public static Participant register(ArrayList<Participant> participants) {
+    public static Participant register(ArrayList<Participant> participants) {       //2.1 (SD-login)
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("===== Register New Account =====");
@@ -22,9 +22,9 @@ public class Register {
             }
 
             // Check if ID already exists
-            for (Participant p : participants) {
+            for (Participant p : participants) {        //2.1.1 (SD-login)
                 if (p.getId().equalsIgnoreCase(id)) {
-                    System.out.println("This ID is already taken!");
+                    System.out.println("This ID is already registered! Please login!");
                     return null;
                 }
             }
@@ -41,9 +41,9 @@ public class Register {
             }
 
             //Check if name is already exists
-            for (Participant p : participants) {
-                if (p.getId().equalsIgnoreCase(name)) {
-                    System.out.println("This ID is already taken!");
+            for (Participant p : participants) {    //2.1.1 (SD-login)
+                if (p.getName().equalsIgnoreCase(name)) {
+                    System.out.println("This name is already registered! Please login!");
                     return null;
                 }
             }
@@ -61,11 +61,20 @@ public class Register {
                 }
 
             }
+
+            //Check if email already exists
+            for (Participant p : participants) {    //2.1.1 (SD-login)
+                if (p.getEmail().equalsIgnoreCase(email)) {
+                    System.out.println("This email is already registered! Please login!");
+                    return null;
+                }
+            }
+
             // Create new participant
-            Participant p = new Participant(id, name, email);
+            Participant p = new Participant(id, name, email);   //2.1.2(SD-login)
             participants.add(p);
 
-            System.out.println("Registration Successful!");
+            System.out.println("Registration Successful!");     //2.1.3(SD-login)
             return p;
         }
         return null;

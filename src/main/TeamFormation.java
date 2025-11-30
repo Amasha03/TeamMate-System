@@ -155,16 +155,14 @@ public class TeamFormation implements TeamBuilder{
 
 
     //FIND WHICH TEAM A PARTICIPANT BELONGS TO
-    public static Team TeamOfParticipant (String participantId){
+    public static Team TeamOfParticipant (String participantId){        //1.3(SD-view assigned team)
         if(teams==null){
-            System.out.println("No teams have been created yet.");
+            System.out.println("No teams have been created yet.");  //1.4(SD-view assigned team)
         }
-        for(Team team:teams){
-            for(Participant p:team.members){
+        for(Team team:teams){       //1.5(SD-view assigned team)
+            for(Participant p:team.members){        //1.6(SD-view assigned team)
                 if(p.id.equals(participantId)){
-                    return team;
-                } else {
-                    System.out.println("You have not assigned to any team.");
+                    return team;        //1.7(SD-view assigned team)
                 }
             }
         }

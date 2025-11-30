@@ -13,7 +13,7 @@ public class Participant extends User{
     TeamFormation teamFormation;
 
     //Constructors
-    public Participant(String id, String name,String email){
+    public Participant(String id, String name,String email){    //2.1.2 (SD-login)
         super(id,email);
         this.name=name;
         this.surveyCompleted=false;
@@ -36,7 +36,7 @@ public class Participant extends User{
             System.out.println("\n===== Participant Menu =====");
             System.out.println("1. View my details");
             System.out.println("2. Complete Survey");
-            System.out.println("3. View Formed Teams");
+            System.out.println("3. View Assigned Team");
             System.out.println("4. Logout");
             System.out.print("Enter your choice: ");
             int choice;
@@ -57,17 +57,18 @@ public class Participant extends User{
                 case 1:
                     viewParticipantDetails();
                     break;
-                case 2:
+                case 2:         //1.1(SD-complete survey)
                     if(surveyCompleted){
-                        System.out.println("Survey is already completed");
+                        System.out.println("Survey is already completed");  //1.2(SD-complete survey)
                     }else{
-                    completeSurvey();}
+                    completeSurvey();   //1.3(SD-complete survey)
+                    }
                     break;
-                case 3:
+                case 3:         //1.1(SD-view assigned team)
                     if(teamFormation==null){
-                        System.out.println("Teams are not generated yet.");
+                        System.out.println("Teams are not generated yet.");     //1.2(SD-view assigned team)
                     }else {
-                        teamFormation.displayTeams();
+                        viewTeam();
                     }
                     break;
                 case 4:
@@ -109,13 +110,13 @@ public class Participant extends User{
 
     //VIEW THE ASSIGNED TEAM FOR A PARTICIPANT
     public void viewTeam() {
-        Team myTeam = TeamFormation.TeamOfParticipant(this.id);
+        Team myTeam = TeamFormation.TeamOfParticipant(this.id);     //1.3(SD-view assigned team)
 
         if(myTeam==null){
             System.out.println("You are not assigned to any team yet.");
         }else{
             System.out.println("\n======== Your Team =========");
-            System.out.println(myTeam);
+            System.out.println(myTeam);     //1.8(SD-view assigned team)
         }
     }
 

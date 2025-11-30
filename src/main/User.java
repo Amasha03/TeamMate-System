@@ -1,10 +1,9 @@
 package main;
-import main.*;
 public abstract class User {
     String id;
     String email;
 
-    public User(String id, String email) {
+    public User(String id, String email) {      //2.1.2.1(SD-login)
         this.id = id;
         this.email = email;
     }

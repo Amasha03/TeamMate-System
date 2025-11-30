@@ -11,7 +11,7 @@ public class Survey {
     int skillLevel;
 
     //constructor
-    public Survey(String interests,String preferredRole,int personalityScore,String personalityType,int skillLevel){
+    public Survey(String interests,String preferredRole,int personalityScore,String personalityType,int skillLevel){    //1.3.2(SD-complete survey)
         this.interests=interests;
         this.preferredRole=preferredRole;
         this.personalityScore=personalityScore;
@@ -37,6 +37,7 @@ public class Survey {
         int[] surveyScores = new int[5];
 
 
+        //1.3.1 (SD-complete survey)
         System.out.println("==========MEMBER SURVEY==========");
         System.out.println("Personality Questions:");
         System.out.println("Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree).");
@@ -112,12 +113,12 @@ public class Survey {
         }
 
         //calculate personality score
-            int personalityScore=0;
+            int personalityScore=0;         //1.3.2(SD-complete survey)
             for(int score : surveyScores)
                 personalityScore +=score;
             personalityScore *=4;
 
-        String personalityType;
+        String personalityType;         //1.3.3(SD-complete survey )
         if(personalityScore >90)
             personalityType="Leader";
         else if (personalityScore>70)
@@ -130,7 +131,7 @@ public class Survey {
 
 
         //Display full info
-        System.out.println("\n------member survey result------");
+        System.out.println("\n------member survey result------");   //1.3.3(SD-complete survey)
         System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Score: "+personalityScore+"\nPersonality Type: "+ personalityType+"\nSkill Level: "+skillLevel);
 
 
