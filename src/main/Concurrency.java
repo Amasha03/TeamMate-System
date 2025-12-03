@@ -4,24 +4,24 @@ import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 public class Concurrency {
-    private ArrayList<Participant> participants;
-
-    private final ExecutorService executor = Executors.newFixedThreadPool(5);
+    private ArrayList<Participant> allparticipants;
+    private TeamFormation teamFormation=new TeamFormation();
+    private final ExecutorService executor = Executors.newFixedThreadPool(2);
 
 
     public Concurrency(ArrayList<Participant> participants){
-        this.participants = participants;
+        this.allparticipants = participants;
     }
 
     //process surveys using threads
     public void processSurveys(){
-        if (participants==null||participants.isEmpty()){
+        if (allparticipants==null||allparticipants.isEmpty()){
             return;
         }
 
         ArrayList <Thread> threads = new ArrayList<>();
 
-        for(Participant p : participants){
+        for(Participant p : allparticipants){
             Thread t=new Thread(() ->{
                 try{
                     Survey survey = p.survey;
@@ -59,33 +59,64 @@ public class Concurrency {
         for(Thread t : threads){
             try {
                 t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignored) {
+
             }
         }
 
     }
 
-    private final TeamFormation teamFormation = new TeamFormation();
 
     //Generate teams concurrently
-    public void formTeams(ArrayList<Participant> participants,int teamSize) {
+    public void formTeams(int teamSize) {       //1.2(SD-generate teams )
 
-        if (participants==null||participants.isEmpty()){
+        if (allparticipants==null||allparticipants.isEmpty()){
             System.out.println("No participants available.");
             return;
         }
-        try{
-            //create teams(threads)
-            Future<?> createTeamsFuture = executor.submit(() -> teamFormation.generateTeams(participants,teamSize));
 
-            //wait for teams to be created
-            createTeamsFuture.get();
+        ArrayList<Participant> leaders=new ArrayList<>();
+        ArrayList<Participant> thinkers=new ArrayList<>();
+        ArrayList<Participant> balanced=new ArrayList<>();
 
-        }catch(Exception e){
-            System.out.println("Error during concurrent team formation.");
-            e.printStackTrace();
+        for (Participant p : allparticipants){
+            switch (p.personalityType.toLowerCase()){
+                case "leader":
+                    leaders.add(p);
+                case  "balanced":
+                    balanced.add(p);
+                case "thinker":
+                    thinkers.add(p);
+            }
         }
+
+        int totalTeams=TeamFormation.teams.size();
+
+        //thread1
+        Thread t1=new Thread(() ->{
+            teamFormation.assignLeadersAndThinkers(leaders,thinkers,totalTeams);
+        });
+
+        //thread2
+        Thread t2=new Thread(() ->{
+            teamFormation.assignBalancedParticipants(balanced, teamSize);
+        });
+
+        //start threads
+        t1.start();
+        t2.start();
+
+        try{
+            t1.join();
+            t2.join();
+        }catch (InterruptedException e){
+            System.out.println("Error while running parallel tasks!"+e.getMessage());
+        }
+
+        //final balancing
+        teamFormation.finalBalanceTeams();
+
+        System.out.println("Team formation completed!");
     }
     public void shutdown(){
         executor.shutdown();

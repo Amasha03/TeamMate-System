@@ -6,7 +6,7 @@ public class Team {
     public ArrayList<Participant> members=new ArrayList<>();
 
 
-    public Team(int teamSize) {     //1.5(SD-generate teams)
+    public Team(int teamSize) {     //1.6(SD-generate teams)
         this.teamID=teamID;
         this.teamSize=teamSize;
     }
@@ -28,12 +28,12 @@ public class Team {
         return (double) total / members.size();
     }
 
-    public int countRole(String role) {
+    public int countRole(String role) {  //1.4 , 1.5 , 1.6 (SD-view teams)
         int count = 0;
         for (Participant p : members) {
             if (p.personalityType.equalsIgnoreCase(role)) count++;
         }
-        return count;
+        return count;   //1.4.1,  1.5.1,  1.6.1 (SD-view teams)
     }
 
     //Team Object

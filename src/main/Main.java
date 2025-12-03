@@ -16,17 +16,15 @@ public class Main {
         // Create Login object
         Login loginSystem = new Login(organizers, participants);
 
+
+        //concurrency.processSurveys();
+
         // Call home screen
         loginSystem.showHomeScreen();
 
-        //concurrency
-        Concurrency concurrency = new Concurrency(participants);
-        concurrency.processSurveys();
-        concurrency.formTeams(participants,5);
-        concurrency.shutdown();
 
-        //TeamFormation teamFormation=new TeamFormation();
-        //Organizer.showMenu().;
+
+
 
 
     }

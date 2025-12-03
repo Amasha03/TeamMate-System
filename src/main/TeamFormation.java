@@ -10,7 +10,7 @@ public class TeamFormation implements TeamBuilder{
 
     public static int assignTeamSize(Scanner scanner){      //1.2(SD-define team size)
         while(true){
-            System.out.println("Enter team size: ");
+            System.out.print("Enter team size: ");
 
             try{
                 int teamSize = Integer.parseInt(scanner.nextLine());
@@ -30,21 +30,23 @@ public class TeamFormation implements TeamBuilder{
 
     //GENERATING TEAMS ACCORDING TO THE MATCHING ALGORITHM
     @Override
-    public void generateTeams(ArrayList<Participant> participants,int teamSize) {       //1.2(SD-generate teams)
-        teams.clear();
+    public void generateTeams(ArrayList<Participant> participants,int teamSize) {
+
+        //1.2(SD-generate teams)
+
         if (participants==null||participants.isEmpty()) {
-            System.out.println("Please upload the participant details CSV first!");
+            System.out.println("Please upload the participant details CSV first!");     //1.4(SD-generate teams)
             return;
         } else if (teamSize <=2 || teamSize >=13) {
-            System.out.println("Please define the team size!");
+            System.out.println("Please define the team size!");     //1.5(SD-generate teams)
             return;
         }
-
+        teams.clear();
 
         //calculate number of teams
         int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
         for (int i = 0; i < totalTeams; i++)
-            teams.add(new Team(teamSize));      //1.5(SD-generate teams)
+            teams.add(new Team(teamSize));      //1.6(SD-generate teams)
 
         //separate participants by personality
         ArrayList<Participant> leaders = new ArrayList<>();
@@ -68,19 +70,21 @@ public class TeamFormation implements TeamBuilder{
         }
 
         //sort participant list by skill descending
-        leaders.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));
-        thinkers.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));
-        balanced.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));
+        leaders.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));      //1.7(SD-generate teams)
+        thinkers.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.8(SD-generate teams)
+        balanced.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.9(SD-generate teams)
+
 
         //assign leaders (top -> bottom) and thinkers (bottom -> top)
-        assignLeadersAndThinkers(leaders, thinkers, totalTeams);
+        assignLeadersAndThinkers(leaders, thinkers, totalTeams);    //2.1(SD-generate teams)
 
         //assign balanced participants to weakest teams first
-        assignBalancedParticipants(balanced, teamSize);
+        assignBalancedParticipants(balanced, teamSize);         //2.2(SD-generate teams)
 
         //final balancing to ensure at least a leader and thinker per team
-        finalBalanceTeams();
+        finalBalanceTeams();    //2.3(SD-generate teams)
 
+        //2.4(SD-generate teams)
         System.out.println("Total number of teams: " + teams.size());
         System.out.println("Total number of participants: " + participants.size());
         System.out.println("Leaders: " + leaders.size()+", Thinkers: " + thinkers.size()+", Balanced: " + balanced.size());
@@ -91,13 +95,13 @@ public class TeamFormation implements TeamBuilder{
         //leaders top -> bottom
         int teamIndex = 0;
         for (Participant p : leaders) {
-            teams.get(teamIndex).addMember(p);
+            teams.get(teamIndex).addMember(p);  //2.1.1(SD-generate teams)
             teamIndex=(teamIndex+1)%totalTeams;
         }
 
         //thinkers bottom -> top
         teamIndex=totalTeams-1;
-        for (Participant p : thinkers) {
+        for (Participant p : thinkers) {    //2.1.2(SD-generate teams)
             teams.get(teamIndex).addMember(p);
             teamIndex--;
             if(teamIndex<0){
@@ -105,25 +109,26 @@ public class TeamFormation implements TeamBuilder{
             }
         }
 
+
     }
 
-    public void assignBalancedParticipants(ArrayList<Participant> balanced, int teamSize) {
+    public void assignBalancedParticipants(ArrayList<Participant> balanced, int teamSize) {     //2.2(SD-generate teams)
         for(Participant p : balanced){
             //find team with lowest average skill that is not full
-            Team weakest=teams.stream().filter(t->t.members.size()<teamSize).min(Comparator.comparingDouble(Team::getAverageSkill)).orElse(null);
+            Team weakest=teams.stream().filter(t->t.members.size()<teamSize).min(Comparator.comparingDouble(Team::getAverageSkill)).orElse(null);   //2.2.1(SD-generate teams)
             if(weakest!=null){
-                weakest.addMember(p);
+                weakest.addMember(p);   //2.2.2(SD-generate teams)
             }
         }
     }
 
-    public void finalBalanceTeams() {
-        for(Team t:teams){
+    public void finalBalanceTeams() {   //2.3(SD-generate teams)
+        for(Team t:teams){  //2.3.1(SD-generate teams)
             if(t.countRole("leader")==0){
-                moveRoleToTeam("leader",t);
+                moveRoleToTeam("leader",t);     //2.3.2(SD-generate teams)
             }
-            if(t.countRole("thinker")==0){
-                moveRoleToTeam("thinker",t);
+            if(t.countRole("thinker")==0){  //2.3.3(SD-generate teams)
+                moveRoleToTeam("thinker",t);    //2.3.4(SD-generate teams)
             }
         }
     }
@@ -145,9 +150,9 @@ public class TeamFormation implements TeamBuilder{
 
     //DISPLAY ALL GENERATED TEAMS
     @Override
-    public void displayTeams(){
+    public void displayTeams(){     //1.2(SD-view teams)
         if (teams==null||teams.isEmpty()){
-            System.out.println("No teams have been generated yet. Please generate teams first!");
+            System.out.println("No teams have been generated yet. Please generate teams first!");   //1.3(SD-view teams)
             return;
         }
         int count=1;
@@ -158,9 +163,9 @@ public class TeamFormation implements TeamBuilder{
             int totalMembers=t.members.size();
 
             //count roles
-            int leaders=t.countRole("leader");
-            int thinkers=t.countRole("thinker");
-            int balanced=t.countRole("balanced");
+            int leaders=t.countRole("leader");  //1.4(SD-view teams)
+            int thinkers=t.countRole("thinker");    //1.5(SD-view teams)
+            int balanced=t.countRole("balanced");   //1.6(SD-view teams)
 
             //count preferred games
             Map<String,Long> gameCount = t.members.stream().collect(Collectors.groupingBy(Participant::getPreferredGame,Collectors.counting()));
@@ -168,7 +173,7 @@ public class TeamFormation implements TeamBuilder{
             //average skill
             double avgSkill=t.getAverageSkill();
 
-            //display team info
+            //display team info  1.7()SD-view teams
             System.out.println("Total participants: "+totalMembers);
             System.out.println("Leaders: "+leaders+", Thinkers: "+thinkers+", Balanced: "+balanced);
             System.out.println("Preferred games: "+gameCount);

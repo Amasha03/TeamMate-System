@@ -33,7 +33,7 @@ public class Organizer extends User{
         Scanner scanner=new Scanner(System.in);
         int choice;
         do {
-            System.out.println("===== Organizer Menu =====");
+            System.out.println("\n===== Organizer Menu =====");
             System.out.println("1. View Personal Details");
             System.out.println("2. Save CSV");
             System.out.println("3. Upload Participant CSV");
@@ -41,15 +41,26 @@ public class Organizer extends User{
             System.out.println("5. Generate Teams");
             System.out.println("6. View Formed Teams");
             System.out.println("7. Logout");
-            System.out.print("Enter your choice: ");
+            System.out.print("\nEnter your choice: ");
             choice=scanner.nextInt();
             scanner.nextLine();
+
+            try{
+                if(choice<1 || choice>7){
+                    System.out.println("Invalid choice. Please enter a number between 1-7.");
+                    continue;
+                }
+            }catch(NumberFormatException e){
+                System.out.println("Invalid choice. Please enter a number between 1-7.");
+                continue;
+            }
+
             switch (choice) {
                 case 1:
                     viewOrganizerDetails();
                     break;
-                case 2:
-                    Scanner sc=new Scanner(System.in);
+                case 2:     //1.1(SD-save csv)
+                    Scanner sc=new Scanner(System.in);      //1.2(SD-save csv)
                     System.out.println("=====Save CSV ======");
                     System.out.println("1.Save participant CSV");
                     System.out.println("2.Save Formed Teams CSV");
@@ -57,11 +68,11 @@ public class Organizer extends User{
                     int saveChoice=sc.nextInt();
                     sc.nextLine();
                     switch (saveChoice) {
-                        case 1:
+                        case 1:     //1.3(SD-save csv)
                             System.out.println("Number of participants = " + participants.size());
                             CSVFileHandler.saveParticipantsToCSV(participants, "resources/participants.csv");
                             break;
-                        case 2:
+                        case 2:     //2.1(SD-save csv)
                             String savePath="resources/formed_teams.csv";
                             CSVFileHandler.saveTeamsToCSV(savePath);
                             break;
@@ -88,17 +99,21 @@ public class Organizer extends User{
                     } else {
                         try{
                             teamFormation.generateTeams(allParticipants, teamSize);     //1.2(SD-generate teams)
-
                             for (Participant p : allParticipants) {
                                 p.setTeamFormation(teamFormation);
                             }
+                            //concurrency
+                            Concurrency concurrency = new Concurrency(allParticipants);
+                            concurrency.formTeams(teamSize);
+                            concurrency.shutdown();
+
                         }catch (Exception e) {
                             System.out.println("Failed to generate teams.");
                         }
                     }
                     break;
-                case 6:
-                    teamFormation.displayTeams();
+                case 6:     //1.1(SD-view teams)
+                    teamFormation.displayTeams();   //1.2(SD-view teams)
                     break;
                 case 7:
                     System.out.println("Logging out...");

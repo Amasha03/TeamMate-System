@@ -90,15 +90,15 @@ public class CSVFileHandler {
 
 
     //SAVE REGISTERED PARTICIPANTS TO CSV
-    public static void saveParticipantsToCSV(ArrayList<Participant> participants,String pFilePath){
+    public static void saveParticipantsToCSV(ArrayList<Participant> participants,String pFilePath){     //1.3(SD-save csv)
         if(participants==null ||participants.isEmpty()){
-            System.out.println("No participants to save!");
+            System.out.println("No participants to save!");     //1.4(SD-save csv)
             return;
         }
         try{
-            FileWriter fileWriter = getFileWriter(participants, pFilePath);
+            FileWriter fileWriter = getFileWriter(participants, pFilePath);     //1.5(SD-save csv)
             fileWriter.close();
-            System.out.println("Participants successfully saved to : "+ pFilePath);
+            System.out.println("Participants successfully saved to : "+ pFilePath);     //1.8(SD-save csv)
         }catch (IOException e){
             System.out.println("Error in writing to file"+e.getMessage());
         }catch (Exception e){
@@ -107,22 +107,26 @@ public class CSVFileHandler {
     }
 
     //CREATE PARTICIPANT CSV IN STRUCTURED FORMAT
-    private static FileWriter getFileWriter(ArrayList<Participant> participants, String pFilePath) throws IOException {
+    private static FileWriter getFileWriter(ArrayList<Participant> participants, String pFilePath) throws IOException {     //1.5(SD-save csv)
         FileWriter fileWriter = new FileWriter(pFilePath);
 
         fileWriter.write("ID,Name,Email,PreferredGame,SkillLevel,PreferredRole,PersonalityScore,PersonalityType\n");
-        for(Participant p : participants){
+        for(Participant p : participants){      //1.6(SD-save csv)
             fileWriter.write(p.getId()+","+
                     p.getName()+","+ p.getEmail()+","+ p.getPreferredGame() +","+ p.getSkillLevel()+","+ p.getPreferredRole()+","+p.getPersonalityScore()+"," +p.getPersonalityType()+"\n");
 
         }
-        return fileWriter;
+        return fileWriter;  //1.7(SD-save csv)
     }
 
     //SAVE GENERATED TEAMS TO A CSV FILE
-    public static void saveTeamsToCSV(String filePath){
+    public static void saveTeamsToCSV(String filePath){     //2.1(SD-save csv)
         String teamsFilePath="resources/formed_teams.csv";
 
+        if (TeamFormation.teams==null || TeamFormation.teams.isEmpty()){
+            System.out.println("No teams to save!");    //2.2(SD-save csv)
+            return;
+        }
         try{
             File directory = new File("resources");
             if(!directory.exists()){
@@ -131,10 +135,10 @@ public class CSVFileHandler {
                     return;
                 }
             }
-            FileWriter fw = new FileWriter(teamsFilePath);
+            FileWriter fw = new FileWriter(teamsFilePath); //2.3(SD-save csv)
             fw.write("Team Id,Participant Id,Participant Name,Preferred Game,Preferred Role,Personality Type,Skill Level\n");
             int teamId=1;
-            for(Team team: TeamFormation.teams){
+            for(Team team: TeamFormation.teams){    //2.4(SD-save csv)
                 for(Participant participant: team.members){
                     fw.write(teamId+","+participant.id+","+participant.getName()+","+participant.getPreferredGame()+","+participant.getPreferredRole()+","+participant.getPersonalityType()+","+participant.getSkillLevel()+"\n");
 
@@ -144,7 +148,7 @@ public class CSVFileHandler {
             }
             fw.close();
 
-            logger.severe("Teams successfully saved to  "+teamsFilePath);
+            logger.severe("Teams successfully saved to  "+teamsFilePath);   //2.6(SD-save csv)
         }catch (IOException e){
             logger.severe("Error occurred in saving CSV: "+e.getMessage());
         }catch(Exception e){
