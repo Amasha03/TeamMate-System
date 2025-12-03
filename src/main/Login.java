@@ -45,6 +45,7 @@ public class Login {
                     break;
 
                 case 2:
+                    participants.clear();
                     System.out.println("Goodbye!");
                     return;
 

@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class Organizer extends User{
     private String name;
     private String role;
-    public ArrayList<Participant> participants=new ArrayList<>();
+    public ArrayList<Participant> participants;
+    public ArrayList<Participant> allParticipants=new ArrayList<>();
     public TeamFormation teamFormation;
     private int teamSize;
 
@@ -67,38 +68,28 @@ public class Organizer extends User{
                     }
                     break;
 
-                case 3:
+                case 3:         //1.1(SD-upload csv)
+                    System.out.println("[If you don't have the file path, Please go to the option 2 to save the participants and to get the file path.]");
                     System.out.print("Enter CSV file path: ");
                     String path = scanner.nextLine();
                     try {
-                        participants = CSVFileHandler.loadParticipantCSV(path);
-                        System.out.println("Successfully loaded " + participants.size() + " participants.");
+                        allParticipants = CSVFileHandler.loadParticipantCSV(path);         //1.2(SD-upload csv)
+                        System.out.println("Successfully loaded " + allParticipants.size() + " participants.");
                     }catch (Exception e) {
                         System.out.println("Failed to load CSV file: " + e.getMessage());
                     }
-                case 4:
-                    System.out.print("Enter team size: ");
-                    try{
-                        teamSize = Integer.parseInt(scanner.nextLine());
-                            if (teamSize <= 2) {
-                            System.out.println("Invalid team size. [Minimum team size should be 3]");
-                        }
-
-                    }catch(NumberFormatException e){
-                        System.out.println("Invalid input! Enter a numeric team size.");
-                    }
-                    System.out.println("\nSuccessfully set team size to " + teamSize);
-
-
                     break;
-                case 5:
-                    if (participants.isEmpty()) {
+                case 4:         //1.1(SD-define team size)
+                    teamSize=TeamFormation.assignTeamSize(scanner);     //1.2(SD-define team size)
+                    break;
+                case 5:         //1.1(SD-generate teams)
+                    if (allParticipants.isEmpty()){
                         System.out.println("Please upload participants file before generating teams.");
                     } else {
                         try{
-                            teamFormation.generateTeams(participants, teamSize);
+                            teamFormation.generateTeams(allParticipants, teamSize);     //1.2(SD-generate teams)
 
-                            for (Participant p : participants) {
+                            for (Participant p : allParticipants) {
                                 p.setTeamFormation(teamFormation);
                             }
                         }catch (Exception e) {

@@ -2,19 +2,40 @@ package main;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TeamFormation implements TeamBuilder{
     public static ArrayList<Team> teams = new ArrayList<>();
 
+    public static int assignTeamSize(Scanner scanner){      //1.2(SD-define team size)
+        while(true){
+            System.out.println("Enter team size: ");
+
+            try{
+                int teamSize = Integer.parseInt(scanner.nextLine());
+
+                if(teamSize<=2 || teamSize>=13){
+                    System.out.println("Invalid team size. [Team size should be between 3 and 12]");    //1.3(SD-define team size)
+                }else{
+                    System.out.println("\nSuccessfully set team size to " + teamSize);      //1.4(SD-define team size)
+                    return teamSize;
+                }
+            }catch(NumberFormatException e){
+                System.out.println("Invalid team size!");
+            }
+        }
+    }
+
+
     //GENERATING TEAMS ACCORDING TO THE MATCHING ALGORITHM
     @Override
-    public void generateTeams(ArrayList<Participant> participants,int teamSize) {
+    public void generateTeams(ArrayList<Participant> participants,int teamSize) {       //1.2(SD-generate teams)
         teams.clear();
         if (participants==null||participants.isEmpty()) {
             System.out.println("Please upload the participant details CSV first!");
             return;
-        } else if (teamSize <=0) {
+        } else if (teamSize <=2 || teamSize >=13) {
             System.out.println("Please define the team size!");
             return;
         }
@@ -23,7 +44,7 @@ public class TeamFormation implements TeamBuilder{
         //calculate number of teams
         int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
         for (int i = 0; i < totalTeams; i++)
-            teams.add(new Team(teamSize));
+            teams.add(new Team(teamSize));      //1.5(SD-generate teams)
 
         //separate participants by personality
         ArrayList<Participant> leaders = new ArrayList<>();
@@ -125,6 +146,10 @@ public class TeamFormation implements TeamBuilder{
     //DISPLAY ALL GENERATED TEAMS
     @Override
     public void displayTeams(){
+        if (teams==null||teams.isEmpty()){
+            System.out.println("No teams have been generated yet. Please generate teams first!");
+            return;
+        }
         int count=1;
         for(Team t:teams){
             System.out.println("\n======= Team "+ count++ +"======");

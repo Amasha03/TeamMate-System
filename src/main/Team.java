@@ -6,7 +6,7 @@ public class Team {
     public ArrayList<Participant> members=new ArrayList<>();
 
 
-    public Team(int teamSize) {
+    public Team(int teamSize) {     //1.5(SD-generate teams)
         this.teamID=teamID;
         this.teamSize=teamSize;
     }
