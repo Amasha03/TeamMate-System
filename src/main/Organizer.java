@@ -56,8 +56,8 @@ public class Organizer extends User{
             }
 
             switch (choice) {
-                case 1:
-                    viewOrganizerDetails();
+                case 1:     //2.1(SD-view personal details)
+                    viewOrganizerDetails();     //2.2(view personal details)
                     break;
                 case 2:     //1.1(SD-save csv)
                     Scanner sc=new Scanner(System.in);      //1.2(SD-save csv)
@@ -96,6 +96,8 @@ public class Organizer extends User{
                 case 5:         //1.1(SD-generate teams)
                     if (allParticipants.isEmpty()){
                         System.out.println("Please upload participants file before generating teams.");
+                    } else if (teamSize<=2||teamSize>=13) {
+                        System.out.println("Please define the team size first!");
                     } else {
                         try{
                             teamFormation.generateTeams(allParticipants, teamSize);     //1.2(SD-generate teams)
@@ -105,7 +107,6 @@ public class Organizer extends User{
                             //concurrency
                             Concurrency concurrency = new Concurrency(allParticipants);
                             concurrency.formTeams(teamSize);
-                            concurrency.shutdown();
 
                         }catch (Exception e) {
                             System.out.println("Failed to generate teams.");
@@ -126,8 +127,8 @@ public class Organizer extends User{
     }
 
     //DISPLAY ORGANIZER PERSONAL DETAILS
-    public void viewOrganizerDetails() {
-        System.out.println("\n===== Organizer Details =====");
+    public void viewOrganizerDetails() {        //2.2(SD-view personal details)
+        System.out.println("\n===== Organizer Details =====");  //2.3(view personal details)
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);

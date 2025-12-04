@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class TeamFormation implements TeamBuilder{
     public static ArrayList<Team> teams = new ArrayList<>();
+    public static ArrayList<Participant> participants = new ArrayList<>();
 
     public static int assignTeamSize(Scanner scanner){      //1.2(SD-define team size)
         while(true){
@@ -32,13 +33,14 @@ public class TeamFormation implements TeamBuilder{
     @Override
     public void generateTeams(ArrayList<Participant> participants,int teamSize) {
 
+        TeamFormation.participants = participants;
         //1.2(SD-generate teams)
 
         if (participants==null||participants.isEmpty()) {
-            System.out.println("Please upload the participant details CSV first!");     //1.4(SD-generate teams)
+            System.out.println("Please upload the participant details CSV first!");     //1.3(SD-generate teams)
             return;
         } else if (teamSize <=2 || teamSize >=13) {
-            System.out.println("Please define the team size!");     //1.5(SD-generate teams)
+            System.out.println("Please define the team size!");     //1.4(SD-generate teams)
             return;
         }
         teams.clear();
@@ -46,7 +48,7 @@ public class TeamFormation implements TeamBuilder{
         //calculate number of teams
         int totalTeams = (int) Math.ceil((double) participants.size() / teamSize);
         for (int i = 0; i < totalTeams; i++)
-            teams.add(new Team(teamSize));      //1.6(SD-generate teams)
+            teams.add(new Team(teamSize));      //1.5(SD-generate teams)
 
         //separate participants by personality
         ArrayList<Participant> leaders = new ArrayList<>();
@@ -70,9 +72,9 @@ public class TeamFormation implements TeamBuilder{
         }
 
         //sort participant list by skill descending
-        leaders.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));      //1.7(SD-generate teams)
-        thinkers.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.8(SD-generate teams)
-        balanced.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.9(SD-generate teams)
+        leaders.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));      //1.6(SD-generate teams)
+        thinkers.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.7(SD-generate teams)
+        balanced.sort((a, b) -> Integer.compare(b.getSkillLevel(), a.getSkillLevel()));     //1.8(SD-generate teams)
 
 
         //assign leaders (top -> bottom) and thinkers (bottom -> top)
@@ -95,13 +97,13 @@ public class TeamFormation implements TeamBuilder{
         //leaders top -> bottom
         int teamIndex = 0;
         for (Participant p : leaders) {
-            teams.get(teamIndex).addMember(p);  //2.1.1(SD-generate teams)
+            teams.get(teamIndex).addMember(p);  //2.1.1, 3.2.1(SD-generate teams)
             teamIndex=(teamIndex+1)%totalTeams;
         }
 
         //thinkers bottom -> top
         teamIndex=totalTeams-1;
-        for (Participant p : thinkers) {    //2.1.2(SD-generate teams)
+        for (Participant p : thinkers) {    //2.1.2, 3.2.2 (SD-generate teams)
             teams.get(teamIndex).addMember(p);
             teamIndex--;
             if(teamIndex<0){
@@ -115,7 +117,7 @@ public class TeamFormation implements TeamBuilder{
     public void assignBalancedParticipants(ArrayList<Participant> balanced, int teamSize) {     //2.2(SD-generate teams)
         for(Participant p : balanced){
             //find team with lowest average skill that is not full
-            Team weakest=teams.stream().filter(t->t.members.size()<teamSize).min(Comparator.comparingDouble(Team::getAverageSkill)).orElse(null);   //2.2.1(SD-generate teams)
+            Team weakest=teams.stream().filter(t->t.members.size()<teamSize).min(Comparator.comparingDouble(Team::getAverageSkill)).orElse(null);   //2.2.1,  3.2.1(SD-generate teams)
             if(weakest!=null){
                 weakest.addMember(p);   //2.2.2(SD-generate teams)
             }
@@ -133,7 +135,7 @@ public class TeamFormation implements TeamBuilder{
         }
     }
 
-    public void moveRoleToTeam(String role, Team target) {
+    public void moveRoleToTeam(String role, Team target) {  //2.3.2, 2.3.4 (SD-generate teams)
         for(Team source : teams){
             if(source==target){
                 continue;

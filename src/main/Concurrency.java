@@ -6,12 +6,16 @@ import java.util.logging.Logger;
 public class Concurrency {
     private ArrayList<Participant> allparticipants;
     private TeamFormation teamFormation=new TeamFormation();
-    private final ExecutorService executor = Executors.newFixedThreadPool(2);
+    private final ExecutorService surveyExecutor;
 
 
     public Concurrency(ArrayList<Participant> participants){
         this.allparticipants = participants;
+        int numThreads=Math.max(1,Math.min(participants.size(),10));
+        this.surveyExecutor=Executors.newFixedThreadPool(numThreads);
     }
+
+
 
     //process surveys using threads
     public void processSurveys(){
@@ -19,14 +23,14 @@ public class Concurrency {
             return;
         }
 
-        ArrayList <Thread> threads = new ArrayList<>();
+        List <Callable<Void>> tasks = new ArrayList<>();
 
-        for(Participant p : allparticipants){
-            Thread t=new Thread(() ->{
-                try{
+        for(Participant p : allparticipants) {
+            tasks.add(() -> {
+                try {
                     Survey survey = p.survey;
 
-                    if(survey != null) {
+                    if (survey != null) {
                         int score = 0;
 
                         for (int s : survey.surveyScores) {
@@ -41,18 +45,26 @@ public class Concurrency {
                             survey.personalityType = "Balanced";
                         } else if (survey.personalityScore > 50) {
                             survey.personalityType = "Thinker";
-                        } else if(survey.personalityScore > 0) {
+                        } else if (survey.personalityScore > 0) {
                             survey.personalityType = "Unknown";
-                        }else{
-                            System.out.println("No survey found for participant "+p.getId());
+                        } else {
+                            System.out.println("No survey found for participant " + p.getId());
                         }
                         p.personalityType = survey.personalityType;
                         p.surveyCompleted = true;
                     }
-                }catch (Exception e) {
-                    System.out.println("Error in processing Survey!"+e.getMessage());
+                } catch (Exception e) {
+                    System.out.println("Error in processing Survey!" + e.getMessage());
                 }
+                return null;
             });
+        }
+        try{
+            surveyExecutor.invokeAll(tasks);
+        } catch (InterruptedException e) {
+            System.out.println("Survey processing interrupted: " + e.getMessage());
+        }
+        /**
         threads.add(t);
         t.start();
         }
@@ -62,7 +74,7 @@ public class Concurrency {
             } catch (InterruptedException ignored) {
 
             }
-        }
+        }**/
 
     }
 
@@ -83,18 +95,26 @@ public class Concurrency {
             switch (p.personalityType.toLowerCase()){
                 case "leader":
                     leaders.add(p);
+                    break;
                 case  "balanced":
                     balanced.add(p);
+                    break;
                 case "thinker":
                     thinkers.add(p);
+                    break;
             }
         }
 
-        int totalTeams=TeamFormation.teams.size();
+        int totalTeams=(int)Math.ceil((double) allparticipants.size()/teamSize);
+
+        TeamFormation.teams.clear();
+        for (int i = 0; i < totalTeams; i++) {
+            TeamFormation.teams.add(new Team(teamSize));
+        }
 
         //thread1
-        Thread t1=new Thread(() ->{
-            teamFormation.assignLeadersAndThinkers(leaders,thinkers,totalTeams);
+        Thread t1=new Thread(() ->{     //3.1(SD-generate teams)
+            teamFormation.assignLeadersAndThinkers(leaders,thinkers,totalTeams);    //3.2(SD-generate teams)
         });
 
         //thread2
@@ -119,7 +139,14 @@ public class Concurrency {
         System.out.println("Team formation completed!");
     }
     public void shutdown(){
-        executor.shutdown();
+        surveyExecutor.shutdown();
+        try{
+            if(!surveyExecutor.awaitTermination(10,TimeUnit.SECONDS)){
+                surveyExecutor.shutdownNow();
+            }
+        }catch (InterruptedException e){
+            surveyExecutor.shutdownNow();
+        }
     }
 
 

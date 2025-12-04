@@ -31,7 +31,7 @@ public class TeamFormationTest {
 
     @Test
     void testGenerateTeams(){
-        teamFormation.generateTeams(participants,2);
+        teamFormation.generateTeams(participants,5);
         assertFalse(TeamFormation.teams.isEmpty());
     }
 

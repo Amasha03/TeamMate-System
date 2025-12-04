@@ -54,14 +54,19 @@ public class Participant extends User{
             }
 
             switch(choice){
-                case 1:
-                    viewParticipantDetails();
+                case 1:         //1.1(SD-view personal details)
+                    viewParticipantDetails();       //1.2(SD-view personal details)
                     break;
                 case 2:         //1.1(SD-complete survey)
                     if(surveyCompleted){
                         System.out.println("Survey is already completed");  //1.2(SD-complete survey)
                     }else{
-                    completeSurvey();   //1.3(SD-complete survey)
+                    completeSurvey(); //1.3(SD-complete survey)
+
+                    //concurrency
+                    Concurrency concurrency=new Concurrency(TeamFormation.participants);
+                    concurrency.processSurveys();
+                    concurrency.shutdown();
                     }
                     break;
                 case 3:         //1.1(SD-view assigned team)
@@ -81,21 +86,21 @@ public class Participant extends User{
 
 
     //VIEW PARTICIPANTS PERSONAL DETAILS
-    public void viewParticipantDetails() {
-        System.out.println("\n===== Participant Details =====");
+    public void viewParticipantDetails() {          //1.2(SD-view personal details)
+        System.out.println("\n===== Participant Details =====");        //1.3(SD-view personal details)
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);
         System.out.println("Survey Completed: " + surveyCompleted);
         if(surveyCompleted){
-            System.out.println("Personality Type: " + personalityType);
+            System.out.println("Personality Type: " + personalityType);     //1.4(SD-view personal details)
         }else{
-            System.out.println("Please complete the survey.");
+            System.out.println("Please complete the survey.");      //1.5(SD-view personal details)
         }
     }
 
     //SURVEY FOR THE NEWLY REGISTERED PARTICIPANTS
-    public void completeSurvey(){
+    public void completeSurvey(){   //1.3(SD-complete survey)
         this.survey=Survey.completeSurvey();
         this.surveyCompleted=true;
         this.personalityType=this.survey.personalityType;
@@ -104,7 +109,7 @@ public class Participant extends User{
         this.preferredRole=this.survey.getPreferredRole();
         this.skillLevel=this.survey.skillLevel;
 
-        System.out.println("\n Survey completed!!");
+        System.out.println("\n Survey completed!!");    //1.7(SD-complete survey)
     }
 
 

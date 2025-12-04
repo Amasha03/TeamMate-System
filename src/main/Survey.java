@@ -32,7 +32,7 @@ public class Survey {
     }
 
     //SURVEY QUESTIONS
-    public static Survey completeSurvey() {
+    public static Survey completeSurvey() {     //1.3(SD-complete survey)
         Scanner scanner=new Scanner(System.in);
         int[] surveyScores = new int[5];
 
@@ -131,11 +131,11 @@ public class Survey {
 
 
         //Display full info
-        System.out.println("\n------member survey result------");   //1.3.3(SD-complete survey)
+        System.out.println("\n------member survey result------");   //1.5(SD-complete survey)
         System.out.println("\nInterests: "+interests+"\nPreferred Role: "+role+"\nPersonality Score: "+personalityScore+"\nPersonality Type: "+ personalityType+"\nSkill Level: "+skillLevel);
 
 
-        Survey survey = new Survey(interests,role,personalityScore, personalityType, skillLevel);
+        Survey survey = new Survey(interests,role,personalityScore, personalityType, skillLevel);   //1.6(SD-complete survey)
         survey.surveyScores=surveyScores;
         return survey;
 
